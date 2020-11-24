@@ -14,13 +14,6 @@
       <img src="img\logo-nome.png">
     </div>
 
-    <div class="search">
-      <form class="search-form">
-        <input id="search" type="text" placeholder="Insira o nome do personagem">
-        <button id="search-button">&#128269;</button>
-      </form>
-    </div>
-
     <div class="menu">
       <nav>
         <ul>
@@ -39,7 +32,7 @@
   <div id="first-page" class="page-active">
     <main>
       <section class="synopsis">
-      
+
         <h1>Rick and Morty</h1>
         <iframe src=" https://giphy.com/embed/jQDozgWeDXUoQZ1htF" width="100%" frameBorder="0" class="giphy-embed"></iframe>
         <a href="https://giphy.com/gifs/rickandmorty-season-3-adult-swim-rick-and-morty-jQDozgWeDXUoQZ1htF"></a>
@@ -48,8 +41,31 @@
           (garagem da casa de Beth) e levar seu neto de 14 anos Morty em aventuras perigosas e surreais pelo Multiverso.
           Combinados com tensões preexistentes dentro da família, esses eventos causam ao sensível Morty muito angústia em
           casa e na escola.</p>
-    
+
       </section>
+
+      <section>
+        <div class="main search">
+          <form class="search-form">
+            <input id="search" type="text" placeholder="Insira o nome do personagem">
+            <button id="search-button">&#128269;</button>
+          </form>
+        </div>
+      </section>
+
+      <select  class="filter" name="select">
+        <option value="select-options"></option>
+        <option value="human">Human</option>
+          <option value="alien">Alien</option>
+          <option value="unknown">Unknown</option>
+          <option value="alive">Alive</option>
+          <option value="dead">Dead</option>
+          <option value="unknown-status">Unknown</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="unknown-gender">Unknown</option>
+      </select>
+      <button id="option-button">&#128269;</button>
 
       <section class="main-characters">
         <p id="main-characters-title">Personagens Principais</p>
@@ -57,7 +73,7 @@
       </section>
     </main>
   </div>
-  
+
   <div id="characters-page" class="page-disabled">
     <main>
       <section class="filter">
@@ -77,6 +93,7 @@
 
         <section id="paginate">
         <p id="textItems"></p>
+        <p class="characters" id="characters"></p>
         <ul id="list"></ul>
         <div class="pagination">
           <button class="first">&#171;</button>
@@ -94,7 +111,8 @@
   </footer>
 
   <script src="main.js" type="module"></script>
+  <script src="data.js" type="text/javascript"></script>
+  <script src="data/rickandmorty/rickandmorty.js"></script>
 </body>
 
 </html>
- 

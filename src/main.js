@@ -1,5 +1,13 @@
-import { sortData, search } from './data.js';
-import data from './data/rickandmorty/rickandmorty.js';
+import { sortData, search, filterData, sortData, status} from './data.js';
+import {data} from './data/rickandmorty/rickandmorty.js';
+
+
+function getCharacters(list) {
+	for (let character of list) {
+		function charactersPagePrintCard(card);
+	}
+}
+getCharacters(data.results);
 
 function changePage(){
     const menuHome = document.querySelector('#home');
@@ -9,19 +17,49 @@ function changePage(){
     const chooseAlphabeticOrder = document.getElementById("sort-by-alphabetic-order");
     const searchButton = document.getElementById("search-button");
     const searchText = document.getElementById("search");
-    
+    const selectOptions = document.getElementById("select-options");
+    const selectButton = document.getElementById("select-button");
+
+
     menuCharactersPage.addEventListener('click', () => {
         pageDefinitions.page = 1;
         searchText.value = "";
         searchDefinitions.searchText = searchText.value;
         searchDefinitions.searchOrder = "empty";
+        optionsDefinitions.optionsText = selectOptions.value;
+        optionsDefinitions.optionsSelect="select-options";
         home.classList.remove('page-active');
         home.classList.add('page-disabled');
         charactersPage.classList.remove('page-disabled');
         charactersPage.classList.add('page-active');
         update.charactersPage(searchDefinitions.searchText);
+        update.charactersPage(optionsDefinitions.optionsText);
         buttonsControls.createListeners();
+
     })
+
+    selectButton.addEventListener("click", (event) => {
+      if(home.classList.contains("page-active")){
+          home.classList.remove('page-active');
+          home.classList.add('page-disabled');
+          charactersPage.classList.remove('page-disabled');
+          charactersPage.classList.add('page-active');
+      }
+      event.preventDefault();
+      pageDefinitions.page = 1;
+      optionsDefinitions.optionsSelect= "select-options";
+      optionsDefinitions.optionsText = selectOptions.value;
+      update.charactersPage(optionsDefinitions.optionsText);
+      buttonsControls.createListeners();
+  });
+
+    selectOptions.addEventListener("change", (event) => {
+      pageDefinitions.page = 1;
+      optionsDefinitions.optionsText = selectOptions.value;
+      optionsDefinitions.optionsSelect= event.target.value;
+      update.charactersPage(optionsDefinitions.optionsText, optionsDefinitions.optionsSelect);
+      buttonsControls.createListeners();
+    });
 
     searchButton.addEventListener("click", (event) => {
         if(home.classList.contains("page-active")){
@@ -49,6 +87,7 @@ function changePage(){
     menuHome.addEventListener('click', () => {
         searchText.value = "";
         searchDefinitions.searchText = searchText.value;
+        optionsDefinitions.optionsText = selectOptions.value;
         home.classList.remove('page-disabled');
         home.classList.add('page-active');
         charactersPage.classList.remove('page-active');
@@ -66,6 +105,11 @@ const pageDefinitions = {
 const searchDefinitions = {
     searchText: "",
     searchOrder: "empty",
+}
+
+const optionsDefinitions ={
+  optionsText: "",
+  optionsSelect: "select-options",
 }
 
 function firstPagePrintCard(card) {
@@ -130,7 +174,6 @@ function printCard(card){
             paragraph.id = "number-episodes";
         }
     }
-
     let firstEpisodeAppeared;
 
     fetch(card.episode[0])
@@ -141,7 +184,7 @@ function printCard(card){
             nameFirstEpisode.appendChild(document.createTextNode("First (or only) episode in wich it appears: "+data.name));
             listItem.appendChild(nameFirstEpisode);
         })
-    
+
     fetch(card.episode[card.episode.length-1])
         .then(response => response.json())
         .then(function(data){
@@ -155,6 +198,7 @@ function printCard(card){
     listItem.classList.add("item");
     return listItem;
 }
+
 
 const buttonsNumbers = {
     calculateMaxVisible() {
@@ -174,27 +218,27 @@ const buttonsNumbers = {
         }
         return {maxLeft, maxRight};
     },
-    
+
     update() {
         const {maxLeft, maxRight} = buttonsNumbers.calculateMaxVisible();
         document.querySelector('.numbers').innerHTML = "";
-        
+
         for(let actualPage = maxLeft; actualPage<=maxRight; actualPage++){
             buttonsNumbers.create(actualPage);
         }
     },
-    
+
     create(number) {
         const button = document.createElement('button');
         button.innerHTML = number;
-    
+
         button.addEventListener('click', (event) => {
             const page = event.target.innerText;
             buttonsControls.goTo(page);
             update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchOrder);
             buttonsNumbers.update();
         })
-        
+
         document.querySelector('.numbers').appendChild(button);
     }
 }
@@ -241,7 +285,7 @@ const buttonsControls = {
     }
 }
 
-function createItemsIndex() {
+function createItemsIndex() { //criando para colocar informações
     const textItems = document.getElementById("textItems");
     const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
     const finalItem = initialItem+9;
@@ -263,19 +307,19 @@ const update = {
         }
     },
     paginateResults(data) {
-        document.getElementById("list").innerHTML = ""; 
+        document.getElementById("list").innerHTML = "";
         let paging = pageDefinitions.page - 1;
         let start = paging * pageDefinitions.perPage;
         let end = start + pageDefinitions.perPage;
         const dataSlice = data.slice(start, end)
-        
+
         pageDefinitions.totalItems = data.length
         pageDefinitions.totalPage = Math.ceil(pageDefinitions.totalItems/pageDefinitions.perPage)
 
         for(let eachItem of dataSlice){
             charactersPagePrintCard(eachItem);
         }
-    
+
         window.scrollTo(0,0);
         buttonsNumbers.update();
         createItemsIndex()
@@ -290,6 +334,32 @@ const update = {
         }
         update.paginateResults(dataForPaginate);
     },
+
+     getFilterCharacters(list, condition) {
+      let filterResult = filterData(list, condition);
+      getCharacters(filterResult);
+      if (condition == "alive"){
+        document.getElementById("characters").innerHTML = "Alive characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="dead"){
+        document.getElementById("characters").innerHTML = "Dead characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="unknown"){
+        document.getElementById("characters").innerHTML = "Unknown status characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="female"){
+        document.getElementById("characters").innerHTML = "Female characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="male"){
+        document.getElementById("characters").innerHTML = "Male characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="unknown-gender"){
+        document.getElementById("characters").innerHTML = "Unknown gender characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="human"){
+        document.getElementById("characters").innerHTML = "Human characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="alien"){
+        document.getElementById("characters").innerHTML = "Alien characters in all dimensions:" + " " + status(data.results, condition);
+      }else if(condition =="unknown-status"){
+        document.getElementById("characters").innerHTML = "Unknown specie characters in all dimensions:" + " " + status(data.results, condition);
+      }
+      update.paginateResults(filterResult);
+    }
+
 }
 
 function init() {
