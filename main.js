@@ -8,7 +8,7 @@ const html = {
     home: document.getElementById("first-page"),
     homeByLogoImage: document.getElementById("logo-image-button"),
     charactersPage: document.getElementById("characters-page"),
-    chooseAlphabeticOrder: document.getElementById("sort-by-alphabetic-order"),
+    chooseSortOrder: document.getElementById("sort-by"),
     optionEmptyOnSortOrder: document.getElementById("empty"),
     searchButton: document.getElementById("search-button"),
     searchText: document.getElementById("search"),
@@ -16,7 +16,7 @@ const html = {
     menuHamburguerItems: document.getElementById("menu-container"),
     filterButton: document.getElementById("filter-button"),
     filterOptions: document.getElementById("filter-options"),
-    homePageCharactersList: document.getElementById("main-characters-list"),
+    homePageCharactersList: document.querySelector(".characters-list"),
     charactersList: document.getElementById("list"),
     paginateNumbers: document.querySelector(".numbers"),
     paginateFirstPageButton: document.querySelector(".first"),
@@ -24,6 +24,7 @@ const html = {
     paginateNextPageButton: document.querySelector(".next"),
     paginatePreviousPageButton: document.querySelector(".prev"),
     textItemsIndex: document.getElementById("textItems"),
+    numberOfPages: document.getElementById("number-of-pages"),
     filterCheckbox: document.querySelectorAll('input[name="filter-option"]'),
     filterValuesButton: document.getElementById("filter-options-button"),
 };
@@ -88,6 +89,8 @@ function changePage(){
         searchDefinitions.searchFilter = checkedFilters(html.filterCheckbox);
         update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
         buttonsControls.createListeners();
+        html.numberOfPages.innerHTML = "";
+        createItemsIndex();
     });
 
     html.searchButton.addEventListener("click", (event) => {
@@ -106,15 +109,19 @@ function changePage(){
         html.filterOptions.classList.remove("show");
         update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
         buttonsControls.createListeners();
+        html.numberOfPages.innerHTML = "";
+        createItemsIndex();
     });
 
     
-    html.chooseAlphabeticOrder.addEventListener("change", (event) => {
+    html.chooseSortOrder.addEventListener("change", (event) => {
         pageDefinitions.page = 1;
         searchDefinitions.searchText = html.searchText.value;
         searchDefinitions.searchOrder = event.target.value;
         update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
         buttonsControls.createListeners();
+        html.numberOfPages.innerHTML = "";
+        createItemsIndex();
     });
 
     html.menuHomeButton.addEventListener("click", loadHomePage);
@@ -136,92 +143,61 @@ const searchDefinitions = {
 }
 
 function firstPagePrintCard(card) {
-    const cards = printCard(card);
     let firstPageCards = html.homePageCharactersList;
-    firstPageCards.appendChild(cards);
+    firstPageCards.innerHTML = printCard(card);
 }
 
 function charactersPagePrintCard(card) {
-    const cards = printCard(card)
     let charactersCards = html.charactersList;
-    charactersCards.appendChild(cards);
+    charactersCards.innerHTML = printCard(card);
 }
+
 
 function printCard(card){
-    let listItem = document.createElement("li");
-
-    let image = new Image(200,200);
-    image.src = card.image;
-    listItem.appendChild(image);
-
-    for(let [key, value] of Object.entries(card)){
-        if(key === "name"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode(value));
-            listItem.appendChild(paragraph);
-            paragraph.id = "name";
-        }else if(key === "status"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Status: "+value));
-            listItem.appendChild(paragraph);
-            paragraph.id = "status";
-        }else if(key === "species"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode(value));
-            listItem.appendChild(paragraph);
-            paragraph.id = "species";
-        }else if(key === "gender"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Gender: "+value));
-            listItem.appendChild(paragraph);
-            paragraph.id = "gender";
-        }else if(key === "type" && value !== ""){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Type: "+value));
-            listItem.appendChild(paragraph);
-            paragraph.id = "type";
-        }else if(key === "origin"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Origin: "+value.name));
-            listItem.appendChild(paragraph);
-            paragraph.id = "origin";
-        }else if(key === "location"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Last location: "+value.name));
-            listItem.appendChild(paragraph);
-            paragraph.id = "location";
-        }else if(key === "episode"){
-            let paragraph = document.createElement("p");
-            paragraph.appendChild(document.createTextNode("Number of episodes in wich it appears: "+value.length));
-            listItem.appendChild(paragraph);
-            paragraph.id = "number-episodes";
-        }
+    let cards = "";
+    const totalEpisodes = parseInt(dataEpisodes.info.count);
+    for(let eachCard of card){
+        cards += `
+        <li class="item">
+            <img class="image" src=${eachCard.image}>
+            <p class="name">${eachCard.name}</p>
+            <p class="species">${eachCard.species}</p>
+            <p class="status">Status: ${eachCard.status}</p>
+            <p class=${eachCard.type === "" ? "page-disabled" : "type"}>Type: ${eachCard.type}</p>
+            <p class="gender">Gênero: ${eachCard.gender}</p>
+            <p class="origin">Origem: ${eachCard.origin.name}</p>
+            <p class="location">Última localização: ${eachCard.location.name}</p>
+            <p class="episode">Número de episódios em que aparece: ${eachCard.episode.length}</p>
+            <p class="percentage-episodes">Porcentagem de episódios em que aparece: ${Math.round(100*(eachCard.episode.length)/totalEpisodes)}%</p>
+        </li>
+        `
     }
-
-    let firstEpisodeAppeared;
-
-    fetch(card.episode[0])
-        .then(response => response.json())
-        .then(function(data){
-            let nameFirstEpisode = document.createElement("p");
-            firstEpisodeAppeared = data.name
-            nameFirstEpisode.appendChild(document.createTextNode("First (or only) episode in wich it appears: "+data.name));
-            listItem.appendChild(nameFirstEpisode);
-        })
-    
-    fetch(card.episode[card.episode.length-1])
-        .then(response => response.json())
-        .then(function(data){
-            if(data.name !== firstEpisodeAppeared){
-                let nameLastEpisode = document.createElement("p");
-                nameLastEpisode.appendChild(document.createTextNode("Last episode in wich it appears: "+data.name));
-                listItem.appendChild(nameLastEpisode);
-            }
-        })
-
-    listItem.classList.add("item");
-    return listItem;
+    return cards;
 }
+    // let firstEpisodeAppeared;
+
+    // <p class="first-episode-name">Primeiro (ou único) episódio que aparece: ${firstEpisode.name}</p>
+    // <p class=${lastEpisode.name === firstEpisode.name ? "page-disabled" : "last-episode-name"}>Último episódio que aparece: ${lastEpisode.name}</p>
+
+    // fetch(card.episode[0])
+    //     .then(response => response.json())
+    //     .then(function(data){
+    //         let nameFirstEpisode = document.createElement("p");
+    //         firstEpisodeAppeared = data.name
+    //         nameFirstEpisode.appendChild(document.createTextNode("First (or only) episode in wich it appears: "+data.name));
+    //         listItem.appendChild(nameFirstEpisode);
+    //     })
+    
+    // fetch(card.episode[card.episode.length-1])
+    //     .then(response => response.json())
+    //     .then(function(data){
+    //         if(data.name !== firstEpisodeAppeared){
+    //             let nameLastEpisode = document.createElement("p");
+    //             nameLastEpisode.appendChild(document.createTextNode("Last episode in wich it appears: "+data.name));
+    //             listItem.appendChild(nameLastEpisode);
+    //         }
+    //     })
+
 
 const buttonsNumbers = {
     calculateMaxVisible() {
@@ -309,25 +285,31 @@ const buttonsControls = {
 }
 
 function createItemsIndex() {
+    const numberOfPages = html.numberOfPages;
+    if(pageDefinitions.totalPage > 1){
+        numberOfPages.innerHTML = "Página " + pageDefinitions.page + " de " + pageDefinitions.totalPage;
+    }
+
     const textItems = html.textItemsIndex;
     const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
-    const finalItem = initialItem+9;
-    if(pageDefinitions.page === 1){
-        textItems.innerHTML = 1 + "-" + pageDefinitions.perPage + " de " + pageDefinitions.totalItems + " personagens";
-    }else if(pageDefinitions.page === pageDefinitions.totalPage){
-        textItems.innerHTML = initialItem + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
+    const finalItem = initialItem+pageDefinitions.perPage;
+    if(pageDefinitions.totalItems < 9){
+        textItems.innerHTML = 1 + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
     }else {
-        textItems.innerHTML = initialItem + "-" + finalItem + " de " + pageDefinitions.totalItems + " personagens";
+        if(pageDefinitions.page === 1){
+            textItems.innerHTML = 1 + "-" + pageDefinitions.perPage + " de " + pageDefinitions.totalItems + " personagens";
+        }else if(pageDefinitions.page === pageDefinitions.totalPage){
+            textItems.innerHTML = initialItem + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
+        }else {
+            textItems.innerHTML = initialItem + "-" + finalItem + " de " + pageDefinitions.totalItems + " personagens";
+        }
     }
 }
 
 const update = {
     firstPage() {
         const firstPageItems = data.results.slice(0, 5);
-
-        for(let eachFirstPageItem of firstPageItems){
-            firstPagePrintCard(eachFirstPageItem)
-        }
+        firstPagePrintCard(firstPageItems)
     },
     paginateResults(data) {
         html.charactersList.innerHTML = ""; 
@@ -339,10 +321,7 @@ const update = {
         pageDefinitions.totalItems = data.length;
         pageDefinitions.totalPage = Math.ceil(pageDefinitions.totalItems/pageDefinitions.perPage)
 
-        for(let eachItem of dataSlice){
-            charactersPagePrintCard(eachItem);
-        }
-    
+        charactersPagePrintCard(dataSlice);
         window.scrollTo(0,0);
         buttonsNumbers.update();
         createItemsIndex()
@@ -384,11 +363,13 @@ const update = {
             }
             dataForPaginate = filterData
         }
+
         if(sortOrder !== "empty"){
-            sortData(dataForPaginate, "name", sortOrder);
+            dataForPaginate = sortData(dataForPaginate, "name", sortOrder);
         }else{
-            sortData(dataForPaginate, "id", "asc");
+            dataForPaginate = sortData(dataForPaginate, "id", "asc");
         }
+        
         update.paginateResults(dataForPaginate);
     },
 }
@@ -399,22 +380,3 @@ function init() {
 
 init();
 changePage();
-
-const episodes = {
-    episodesCharacter() {
-        const totalEpisodes = parseInt(dataEpisodes.info.count);
-        const charactersForTotalEpisodes = data.results; 
-        
-        let resultsEpisodes;
-        for (let i=0; i <= data.results.length; i++) {
-            let resultsCharacter = data.results[i];
-            
-            if(resultsCharacter){
-            resultsEpisodes = Math.round((100*resultsCharacter.episode.length)/totalEpisodes) + "%";
-            console.log(resultsEpisodes);    
-            }
-        }
-    }
-}
-
-episodes.episodesCharacter();

@@ -19,6 +19,7 @@ body {
     background-color: transparent;
     border: 0;
     cursor: pointer;
+    padding: 0;
 }
 
 #logo-image-button:focus {
@@ -43,8 +44,11 @@ body {
 
 .menu-items {
     margin: 0 0 0 20px;
-    cursor: pointer;
     font-size: 18px;
+}
+
+#home, #characters, #more {
+    cursor: pointer;
 }
 
 .menu-items:first-child {
@@ -86,6 +90,17 @@ body {
     font-size: 18px;
 }
 
+#main-characters-title {
+    text-align: center;
+    font-size: 28px;
+    margin: 30px 0 0 0;
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+}
+
 .characters-list {
     display: flex;
     flex-wrap: wrap;
@@ -100,10 +115,34 @@ body {
     width: 30%;
     margin: 5%;
     text-align: center;
+    box-shadow: 4px 4px 20px rgba(120,135,182,.1);
 }
 
-#main-characters-title {
+/* .characters-list.item:hover {
+    box-shadow: none;
+} */
+
+.characters-list-page-characters {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    justify-content: space-between;
+}
+
+.characters-list-page-characters .item {
+    background-color: #17AEBF;
+    padding: 5%;
+    width: 20%;
+    margin: 2% 0;
     text-align: center;
+    box-shadow: 5px 5px 15px rgba(0,0,0,.4);
+    transition: 0.3s all;
+}
+
+.characters-list-page-characters .item:hover {
+    box-shadow: none;
+    transform: scale(0.99) ;
 }
 
 .filter-options {
@@ -116,6 +155,21 @@ body {
     width: 100%;
 }
 
+.user-choices {
+    display: flex;
+    justify-content: space-between;
+}
+
+.index-of-page {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
 .page-disabled {
     display: none;
 }
@@ -123,6 +177,13 @@ body {
 .page-active {
     display: block;
 }
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 /* MOBILE */
 @media screen and (max-width: 767px) {
@@ -206,7 +267,12 @@ body {
         margin-right: 20px;
     }
 
-    #main-characters-list .item {   
+    .user-choices, .index-of-page {
+        margin: 10px;
+    }
+
+    .characters-list .item, .characters-list-page-characters .item {   
         width: 80%;
+        margin: 2% auto;
     }
 }
