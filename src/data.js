@@ -12,7 +12,8 @@ export const sortData = (data, sortBy, sortOrder) => {
 
     return (sortOrder === "desc") ? (comparison * -1) : comparison
   };
-  data.sort(innerSort);
+  let dataSorted = data.slice();
+  return dataSorted.sort(innerSort);
 };
 
 export const search = (data, searchBy, searchText) => {
