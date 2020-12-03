@@ -1,103 +1,258 @@
-import { sortData, search } from '../src/data.js';
+import { sortData, search, filter } from '../src/data.js';
 
+const data = [
+  {
+    "name": "Ana Beatriz", 
+    "age":"22",
+    "occupation":"teacher",
+    "status":"married",
+    "nacionality":"Brazilian",
+  }, 
+  {
+    "name": "Elis", 
+    "age":"26",
+    "occupation":"designer",
+    "status":"married",
+    "nacionality":"Mexican",
+  }, 
+  {
+    "name": "Carina", 
+    "age":"29",
+    "occupation":"architect",
+    "status":"single",
+    "nacionality":"Mexican",
+  }, 
+  {
+    "name": "Maria Clara", 
+    "age":"21",
+    "occupation":"designer",
+    "status":"divorced",
+    "nacionality":"Brazilian",
+  }, 
+  {
+    "name": "Julia Maria", 
+    "age":"30",
+    "occupation":"teacher",
+    "status":"single",
+    "nacionality":"Brazilian",
+  }, 
+  {
+    "name": "Gabriela", 
+    "age":"23",
+    "occupation":"architect",
+    "status":"divorced",
+    "nacionality":"Brazilian",
+  }, 
+  {
+    "name": "Maria Aparecida", 
+    "age":"21",
+    "occupation":"designer",
+    "status":"single",
+    "nacionality":"Mexican",
+  }
+];
 
 describe('sortData', () => {
   it('should be a function', () => {
     expect(typeof sortData).toBe('function');
   });
 
-  const data = [
-    {
-      "name":"y"
-    },
-    {
-      "name":"b"
-    },
-    {
-      "name":"e"
-    }
-  ];
   const resultAsc = [
     {
-      "name":"b"
+      "name": "Ana Beatriz", 
+      "age":"22",
+      "occupation":"teacher",
+      "status":"married",
+      "nacionality":"Brazilian",
+    }, 
+    {
+      "name": "Carina", 
+      "age":"29",
+      "occupation":"architect",
+      "status":"single",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Elis", 
+      "age":"26",
+      "occupation":"designer",
+      "status":"married",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Gabriela", 
+      "age":"23",
+      "occupation":"architect",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
+    {
+      "name": "Julia Maria", 
+      "age":"30",
+      "occupation":"teacher",
+      "status":"single",
+      "nacionality":"Brazilian",
     },
     {
-      "name":"e"
-    },
+      "name": "Maria Aparecida", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"single",
+      "nacionality":"Mexican",
+    }, 
     {
-      "name":"y"
-    }
+      "name": "Maria Clara", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
   ];
   const resultDesc = [
     {
-      "name":"y"
+      "name": "Maria Clara", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
+    {
+      "name": "Maria Aparecida", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"single",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Julia Maria", 
+      "age":"30",
+      "occupation":"teacher",
+      "status":"single",
+      "nacionality":"Brazilian",
     },
     {
-      "name":"e"
-    },
+      "name": "Gabriela", 
+      "age":"23",
+      "occupation":"architect",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
     {
-      "name":"b"
-    }
+      "name": "Elis", 
+      "age":"26",
+      "occupation":"designer",
+      "status":"married",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Carina", 
+      "age":"29",
+      "occupation":"architect",
+      "status":"single",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Ana Beatriz", 
+      "age":"22",
+      "occupation":"teacher",
+      "status":"married",
+      "nacionality":"Brazilian",
+    }, 
   ];
-  it('should return the value in alphabetic order for the key "name"', () => {
+  it('should return all objects with the value in alphabetic order for the key "name"', () => {
     expect(sortData(data, "name", "asc")).toStrictEqual(resultAsc);
   });
-  it('should return the value in reverse alphabetic order for the key "name"', () => {
+  it('should return all objects with the value in reverse alphabetic order for the key "name"', () => {
     expect(sortData(data, "name", "desc")).toStrictEqual(resultDesc);
   });
 });
-
 
 describe('search', () => {
   it('should be a function', () => {
     expect(typeof search).toBe('function');
   });
 
-  const data = [
-    {
-      "name": "Ana Beatriz", 
-      "age":"22"
-    }, 
-    {
-      "name": "Carina", 
-      "age":"29"
-    }, 
-    {
-      "name": "MARIA Clara", 
-      "age":"21"
-    }, 
-    {
-      "name": "Elis", 
-      "age":"26"
-    }, 
-    {
-      "name": "Julia MariA", 
-      "age":"30"
-    }, 
-    {
-      "name": "Gabriela", 
-      "age":"23"
-    }, 
-    {
-      "name": "Maria Aparecida", 
-      "age":"21"
-    }
-  ];
   const result = [
     {
-      "name": "MARIA Clara", 
-    "age":"21"
+      "name": "Maria Clara", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"divorced",
+      "nacionality":"Brazilian",
     }, 
     {
-      "name": "Julia MariA", 
-      "age":"30"
-    }, 
+      "name": "Julia Maria", 
+      "age":"30",
+      "occupation":"teacher",
+      "status":"single",
+      "nacionality":"Brazilian",
+    },
     {
       "name": "Maria Aparecida", 
-      "age":"21"
-    }
+      "age":"21",
+      "occupation":"designer",
+      "status":"single",
+      "nacionality":"Mexican",
+    }, 
   ];
-  it('should return an array of objects with the result of the search (not to be case sensitive)', () => {
+
+  it('should return all objects with the result of the search "maria"', () => {
     expect(search(data, "name", "maria")).toStrictEqual(result);
   });
 });
+
+describe('filter', () => {
+  it('should be a function', () => {
+    expect(typeof filter).toBe('function');
+  });
+
+  const resultNacionality = [
+    {
+      "name": "Elis", 
+      "age":"26",
+      "occupation":"designer",
+      "status":"married",
+      "nacionality":"Mexican",
+    }, 
+    {
+      "name": "Carina", 
+      "age":"29",
+      "occupation":"architect",
+      "status":"single",
+      "nacionality":"Mexican",
+    },
+    {
+      "name": "Maria Aparecida", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"single",
+      "nacionality":"Mexican",
+    },
+  ];
+
+  const resultStatus = [
+    {
+      "name": "Maria Clara", 
+      "age":"21",
+      "occupation":"designer",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
+    {
+      "name": "Gabriela", 
+      "age":"23",
+      "occupation":"architect",
+      "status":"divorced",
+      "nacionality":"Brazilian",
+    }, 
+  ];
+
+  it('should return all objects with the value "Mexican" to the key "nacionality"', () => {
+    expect(filter(data, "nacionality", "Mexican")).toStrictEqual(resultNacionality);
+  });
+
+  it('should return all objects with the value "divorced" to the key "status"', () => {
+    expect(filter(data, "status", "divorced")).toStrictEqual(resultStatus)
+  });
+});
+
