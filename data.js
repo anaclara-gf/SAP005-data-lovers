@@ -6,7 +6,7 @@ export const sortData = (data, sortBy, sortOrder) => {
     let comparison = 0;
     if(varA>varB){
       comparison = 1;
-    } else if(varA<varB){
+    }else{
       comparison = -1;
     }
 

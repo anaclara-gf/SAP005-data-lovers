@@ -27,6 +27,10 @@ const html = {
     numberOfPages: document.getElementById("number-of-pages"),
     filterCheckbox: document.querySelectorAll('input[name="filter-option"]'),
     filterValuesButton: document.getElementById("filter-options-button"),
+    paragraphNoResults: document.getElementById("no-results"),
+    paginateIndex: document.querySelector(".paginate"),
+    paginationButtonControls: document.querySelector(".pagination"),
+    userChoices: document.querySelector(".user-choices"),
 };
 
 const loadHomePage = () => {
@@ -94,23 +98,29 @@ function changePage(){
     });
 
     html.searchButton.addEventListener("click", (event) => {
-        if(html.home.classList.contains("page-active")){
-            html.home.classList.remove('page-active');
-            html.home.classList.add('page-disabled');
-            html.charactersPage.classList.remove('page-disabled');
-            html.charactersPage.classList.add('page-active');
-        }
         event.preventDefault();
-        pageDefinitions.page = 1;
-        searchDefinitions.searchOrder = "empty";
-        searchDefinitions.searchText = html.searchText.value;
-        uncheckFilters();
-        searchDefinitions.searchFilter = "";
-        html.filterOptions.classList.remove("show");
-        update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
-        buttonsControls.createListeners();
-        html.numberOfPages.innerHTML = "";
-        createItemsIndex();
+        if(html.searchText.value === ""){
+            alert("Digite um nome para sua pesquisa!")
+        }else{
+            if(html.home.classList.contains("page-active")){
+                html.home.classList.remove('page-active');
+                html.home.classList.add('page-disabled');
+                html.charactersPage.classList.remove('page-disabled');
+                html.charactersPage.classList.add('page-active');
+            }
+            pageDefinitions.page = 1;
+            searchDefinitions.searchOrder = "empty";
+            html.numberOfPages.innerHTML = "";
+            searchDefinitions.searchText = html.searchText.value;
+            uncheckFilters();
+            searchDefinitions.searchFilter = "";
+            html.filterOptions.classList.remove("show"); 
+            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
+            // html.paragraphNoResults.innerHTML = "Sua pesquisa não obteve resultados!";
+            buttonsControls.createListeners();
+            html.numberOfPages.innerHTML = "";
+            createItemsIndex();           
+        }
     });
 
     
@@ -127,31 +137,30 @@ function changePage(){
     html.menuHomeButton.addEventListener("click", loadHomePage);
 
     html.homeByLogoImage.addEventListener("click", loadHomePage);
-}
+};
 
 const pageDefinitions = {
     page: 1,
     perPage: 9,
     totalPage: 0,
     totalItems: 0,
-}
+};
 
 const searchDefinitions = {
     searchText: "",
     searchOrder: "empty",
     searchFilter: "",
-}
+};
 
 function firstPagePrintCard(card) {
     let firstPageCards = html.homePageCharactersList;
     firstPageCards.innerHTML = printCard(card);
-}
+};
 
 function charactersPagePrintCard(card) {
     let charactersCards = html.charactersList;
     charactersCards.innerHTML = printCard(card);
-}
-
+};
 
 function printCard(card){
     let cards = "";
@@ -173,7 +182,7 @@ function printCard(card){
         `
     }
     return cards;
-}
+};
     // let firstEpisodeAppeared;
 
     // <p class="first-episode-name">Primeiro (ou único) episódio que aparece: ${firstEpisode.name}</p>
@@ -240,7 +249,7 @@ const buttonsNumbers = {
         
         html.paginateNumbers.appendChild(button);
     }
-}
+};
 
 const buttonsControls = {
     next() {
@@ -282,7 +291,7 @@ const buttonsControls = {
             update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
         })
     }
-}
+};
 
 function createItemsIndex() {
     const numberOfPages = html.numberOfPages;
@@ -293,9 +302,9 @@ function createItemsIndex() {
     const textItems = html.textItemsIndex;
     const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
     const finalItem = initialItem+pageDefinitions.perPage;
-    if(pageDefinitions.totalItems < 9){
+    if(pageDefinitions.totalItems > 1 && pageDefinitions.totalItems < 9){
         textItems.innerHTML = 1 + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
-    }else {
+    }else if(pageDefinitions.totalItems >= 9){
         if(pageDefinitions.page === 1){
             textItems.innerHTML = 1 + "-" + pageDefinitions.perPage + " de " + pageDefinitions.totalItems + " personagens";
         }else if(pageDefinitions.page === pageDefinitions.totalPage){
@@ -304,7 +313,7 @@ function createItemsIndex() {
             textItems.innerHTML = initialItem + "-" + finalItem + " de " + pageDefinitions.totalItems + " personagens";
         }
     }
-}
+};
 
 const update = {
     firstPage() {
@@ -324,7 +333,7 @@ const update = {
         charactersPagePrintCard(dataSlice);
         window.scrollTo(0,0);
         buttonsNumbers.update();
-        createItemsIndex()
+        createItemsIndex();
     },
     charactersPage(searchText, searchFilter, sortOrder = "empty") {
         let dataForPaginate = data.results.slice();
@@ -372,11 +381,11 @@ const update = {
         
         update.paginateResults(dataForPaginate);
     },
-}
+};
 
 function init() {
     update.firstPage();
-}
+};
 
 init();
 changePage();
