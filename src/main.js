@@ -1,4 +1,8 @@
-import { sortData, search, filter } from "./data.js";
+import {
+  sortData,
+  search,
+  filter
+} from "./data.js";
 import data from "./data/rickandmorty/rickandmorty.js";
 import dataEpisodes from "./data/rickandmorty/rickandmorty-episodes.js";
 
@@ -34,33 +38,33 @@ const html = {
 };
 
 const loadHomePage = () => {
-    html.searchText.value = "";
-    searchDefinitions.searchText = html.searchText.value;
-    uncheckFilters();
-    searchDefinitions.searchFilter = "";
-    html.filterOptions.classList.remove("show");
-    html.home.classList.remove("page-disabled");
-    html.home.classList.add("page-active");
-    html.charactersPage.classList.remove("page-active");
-    html.charactersPage.classList.add("page-disabled");
-    html.menuHamburguerItems.classList.toggle("show");
+  html.searchText.value = "";
+  searchDefinitions.searchText = html.searchText.value;
+  uncheckFilters();
+  searchDefinitions.searchFilter = "";
+  html.filterOptions.classList.remove("show");
+  html.home.classList.remove("page-disabled");
+  html.home.classList.add("page-active");
+  html.charactersPage.classList.remove("page-active");
+  html.charactersPage.classList.add("page-disabled");
+  html.menuHamburguerItems.classList.toggle("show");
 };
 
 const uncheckFilters = (checked = false) => {
-    const allFilterItems = html.filterCheckbox;
-    allFilterItems.forEach((filterItem) => {
-        filterItem.checked = checked;
-    });
+  const allFilterItems = html.filterCheckbox;
+  allFilterItems.forEach((filterItem) => {
+    filterItem.checked = checked;
+  });
 };
 
 const checkedFilters = (filterCategory) => {
-    let filterValues = [];
-    for(let i = 0; i < filterCategory.length; i++){
-        if(filterCategory[i].checked){
-            filterValues.push(filterCategory[i].value);
-        }
+  let filterValues = [];
+  for (let i = 0; i < filterCategory.length; i++) {
+    if (filterCategory[i].checked) {
+      filterValues.push(filterCategory[i].value);
     }
-    return filterValues;
+  }
+  return filterValues;
 };
 
 function changePage(){
@@ -141,7 +145,7 @@ function changePage(){
 
 const pageDefinitions = {
     page: 1,
-    perPage: 9,
+    perPage: 12,
     totalPage: 0,
     totalItems: 0,
 };
@@ -162,23 +166,34 @@ function charactersPagePrintCard(card) {
     charactersCards.innerHTML = printCard(card);
 };
 
-function printCard(card){
-    let cards = "";
-    const totalEpisodes = parseInt(dataEpisodes.info.count);
-    for(let eachCard of card){
-        cards += `
+function printCard(card) {
+  let cards = "";
+  const totalEpisodes = parseInt(dataEpisodes.info.count);
+  for (let eachCard of card) {
+    cards += `
+<div class="flip-container">
+  <div class="flipper">
+    <div class="front">
         <li class="item">
             <img class="image" src=${eachCard.image}>
-            <p class="name">${eachCard.name}</p>
-            <p class="species">${eachCard.species}</p>
-            <p class="status">Status: ${eachCard.status}</p>
-            <p class=${eachCard.type === "" ? "page-disabled" : "type"}>Type: ${eachCard.type}</p>
-            <p class="gender">Gênero: ${eachCard.gender}</p>
-            <p class="origin">Origem: ${eachCard.origin.name}</p>
-            <p class="location">Última localização: ${eachCard.location.name}</p>
-            <p class="episode">Número de episódios em que aparece: ${eachCard.episode.length}</p>
-            <p class="percentage-episodes">Porcentagem de episódios em que aparece: ${Math.round(100*(eachCard.episode.length)/totalEpisodes)}%</p>
+            <p class="name"><b>${eachCard.name}</b></p>
         </li>
+        </div>
+
+        <div class="back flip-container">
+        <li class="item">
+        <p class="species"><b>${eachCard.species}</b></p>
+        <p class="status"><b>Status:</b> ${eachCard.status}</p>
+        <p class=${eachCard.type === "" ? "page-disabled" : "type"}><b>Type:</b> ${eachCard.type}</p>
+        <p class="gender"><b>Gênero:</b>${eachCard.gender}</p>
+        <p class="origin"><b>Origem:</b> ${eachCard.origin.name}</p>
+        <p class="location"><b>Última localização:</b> ${eachCard.location.name}</p>
+        <p class="episode"><b>Número de episódios em que aparece:</b> ${eachCard.episode.length}</p>
+        <p class="percentage-episodes"><b>Porcentagem de episódios em que aparece:</b> ${Math.round(100*(eachCard.episode.length)/totalEpisodes)}%</p>
+        </li>
+        </div>
+      </div>
+    </div>
         `
     }
     return cards;
@@ -209,95 +224,100 @@ function printCard(card){
 
 
 const buttonsNumbers = {
-    calculateMaxVisible() {
-        let maxVisibleButtons = 5;
-        let maxLeft = (pageDefinitions.page - Math.floor(maxVisibleButtons/2));
-        let maxRight = (pageDefinitions.page + Math.floor(maxVisibleButtons/2));
-        if(maxLeft<1) {
-            maxLeft = 1;
-            maxRight = maxVisibleButtons;
-        }
-        if(maxRight>pageDefinitions.totalPage) {
-            maxLeft = pageDefinitions.totalPage - (maxVisibleButtons - 1);
-            maxRight = pageDefinitions.totalPage;
-            if(maxLeft<1){
-                maxLeft = 1;
-            }
-        }
-        return {maxLeft, maxRight};
-    },
-    
-    update() {
-        const {maxLeft, maxRight} = buttonsNumbers.calculateMaxVisible();
-        html.paginateNumbers.innerHTML = "";
-        
-        for(let actualPage = maxLeft; actualPage<=maxRight; actualPage++){
-            buttonsNumbers.create(actualPage);
-        }
-    },
-    
-    create(number) {
-        const button = document.createElement("button");
-        button.innerHTML = number;
-    
-        button.addEventListener("click", (event) => {
-            const page = event.target.innerText;
-            buttonsControls.goTo(page);
-            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-            buttonsNumbers.update();
-        })
-        
-        html.paginateNumbers.appendChild(button);
+  calculateMaxVisible() {
+    let maxVisibleButtons = 5;
+    let maxLeft = (pageDefinitions.page - Math.floor(maxVisibleButtons / 2));
+    let maxRight = (pageDefinitions.page + Math.floor(maxVisibleButtons / 2));
+    if (maxLeft < 1) {
+      maxLeft = 1;
+      maxRight = maxVisibleButtons;
     }
-};
+    if (maxRight > pageDefinitions.totalPage) {
+      maxLeft = pageDefinitions.totalPage - (maxVisibleButtons - 1);
+      maxRight = pageDefinitions.totalPage;
+      if (maxLeft < 1) {
+        maxLeft = 1;
+      }
+    }
+    return {
+      maxLeft,
+      maxRight
+    };
+  },
+
+  update() {
+    const {
+      maxLeft,
+      maxRight
+    } = buttonsNumbers.calculateMaxVisible();
+    html.paginateNumbers.innerHTML = "";
+
+    for (let actualPage = maxLeft; actualPage <= maxRight; actualPage++) {
+      buttonsNumbers.create(actualPage);
+    }
+  },
+  create(number) {
+    const button = document.createElement("button");
+    button.innerHTML = number;
+
+    button.addEventListener("click", (event) => {
+      const page = event.target.innerText;
+      buttonsControls.goTo(page);
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
+      buttonsNumbers.update();
+    })
+
+    html.paginateNumbers.appendChild(button);
+  }
+}
 
 const buttonsControls = {
-    next() {
-        pageDefinitions.page++;
-        if(pageDefinitions.page > pageDefinitions.totalPage){
-            pageDefinitions.page--;
-        }
-    },
-    prev() {
-        pageDefinitions.page--;
-        if(pageDefinitions.page<1){
-            pageDefinitions.page++;
-        }
-    },
-    goTo(pageOnClick) {
-        if(pageDefinitions.page <1){
-            pageDefinitions.page=1;
-        }
-        pageDefinitions.page = Number(pageOnClick);
-        if(pageDefinitions.page > pageDefinitions.totalPage){
-            pageDefinitions.page = pageDefinitions.TotalPage;
-        }
-    },
-    createListeners() {
-        html.paginateFirstPageButton.addEventListener("click", () => {
-            buttonsControls.goTo(1);
-            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-        })
-        html.paginateLastPageButton.addEventListener("click", () => {
-            buttonsControls.goTo(pageDefinitions.totalPage);
-            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-        })
-        html.paginateNextPageButton.addEventListener("click", () => {
-            buttonsControls.next();
-            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-        })
-        html.paginatePreviousPageButton.addEventListener("click", () => {
-            buttonsControls.prev();
-            update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-        })
+  next() {
+    pageDefinitions.page++;
+    if (pageDefinitions.page > pageDefinitions.totalPage) {
+      pageDefinitions.page--;
     }
-};
+  },
+  prev() {
+    pageDefinitions.page--;
+    if (pageDefinitions.page < 1) {
+      pageDefinitions.page++;
+    }
+  },
+  goTo(pageOnClick) {
+    if (pageDefinitions.page < 1) {
+      pageDefinitions.page = 1;
+    }
+    pageDefinitions.page = Number(pageOnClick);
+    if (pageDefinitions.page > pageDefinitions.totalPage) {
+      pageDefinitions.page = pageDefinitions.TotalPage;
+    }
+  },
+  createListeners() {
+    html.paginateFirstPageButton.addEventListener("click", () => {
+      buttonsControls.goTo(1);
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
+    })
+    html.paginateLastPageButton.addEventListener("click", () => {
+      buttonsControls.goTo(pageDefinitions.totalPage);
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
+    })
+    html.paginateNextPageButton.addEventListener("click", () => {
+      buttonsControls.next();
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
+    })
+    html.paginatePreviousPageButton.addEventListener("click", () => {
+      buttonsControls.prev();
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
+    })
+  }
+}
 
 function createItemsIndex() {
-    const numberOfPages = html.numberOfPages;
-    if(pageDefinitions.totalPage > 1){
-        numberOfPages.innerHTML = "Página " + pageDefinitions.page + " de " + pageDefinitions.totalPage;
-    }
+  const numberOfPages = html.numberOfPages;
+  if (pageDefinitions.totalPage > 1) {
+    numberOfPages.innerHTML = "Página " + pageDefinitions.page + " de " + pageDefinitions.totalPage;
+  }
 
     const textItems = html.textItemsIndex;
     const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
@@ -345,47 +365,47 @@ const update = {
         if(searchText){
             dataForPaginate = search(dataForPaginate, "name", searchText);
         }
-        if(searchFilter){
-            for(let eachSearchFilter of searchFilter){
-                if(eachSearchFilter === "human" || eachSearchFilter === "alien" || eachSearchFilter === "unknown"){
-                    dataSpeciesFilter = dataSpeciesFilter.concat(filter(dataForPaginate, "species", eachSearchFilter));
-                    filterData = dataSpeciesFilter;
-                }
-                if(eachSearchFilter === "alive" || eachSearchFilter === "dead" || eachSearchFilter === "unknown-status"){
-                    if(filterData.length !== 0 && dataStatusFilter.length === 0){
-                        dataForPaginate = filterData;
-                    }
-                    (eachSearchFilter === "unknown-status") ? 
-                    dataStatusFilter = dataStatusFilter.concat(filter(dataForPaginate, "status", "unknown")) :
-                    dataStatusFilter = dataStatusFilter.concat(filter(dataForPaginate, "status", eachSearchFilter));
-                    filterData = dataStatusFilter;
-                }
-                if(eachSearchFilter === "female" || eachSearchFilter === "male" || eachSearchFilter === "genderless" || eachSearchFilter === "unknown-gender"){
-                    if(filterData.length !== 0 && dataGenderFilter.length === 0){
-                        dataForPaginate = filterData;
-                    }
-                    (eachSearchFilter === "unknown-gender") ?
-                    dataGenderFilter = dataGenderFilter.concat(filter(dataForPaginate, "gender", "unknown")) :
-                    dataGenderFilter = dataGenderFilter.concat(filter(dataForPaginate, "gender", eachSearchFilter));
-                    filterData = dataGenderFilter;
-                }
+        if (searchFilter) {
+          for (let eachSearchFilter of searchFilter) {
+            if (eachSearchFilter === "human" || eachSearchFilter === "alien" || eachSearchFilter === "unknown") {
+                dataSpeciesFilter = dataSpeciesFilter.concat(filter(dataForPaginate, "species", eachSearchFilter));
+                filterData = dataSpeciesFilter;
             }
-            dataForPaginate = filterData
-        }
+            if (eachSearchFilter === "alive" || eachSearchFilter === "dead" || eachSearchFilter === "unknown-status") {
+                if (filterData.length !== 0 && dataStatusFilter.length === 0) {
+                    dataForPaginate = filterData;
+                }
+                (eachSearchFilter === "unknown-status") ?
+                dataStatusFilter = dataStatusFilter.concat(filter(dataForPaginate, "status", "unknown")):
+                    dataStatusFilter = dataStatusFilter.concat(filter(dataForPaginate, "status", eachSearchFilter));
+                filterData = dataStatusFilter;
+            }
+            if (eachSearchFilter === "female" || eachSearchFilter === "male" || eachSearchFilter === "genderless" || eachSearchFilter === "unknown-gender") {
+                if (filterData.length !== 0 && dataGenderFilter.length === 0) {
+                    dataForPaginate = filterData;
+                }
+                (eachSearchFilter === "unknown-gender") ?
+                dataGenderFilter = dataGenderFilter.concat(filter(dataForPaginate, "gender", "unknown")):
+                dataGenderFilter = dataGenderFilter.concat(filter(dataForPaginate, "gender", eachSearchFilter));
+                filterData = dataGenderFilter;
+            }
+      }
+      dataForPaginate = filterData
+    }
 
-        if(sortOrder !== "empty"){
-            dataForPaginate = sortData(dataForPaginate, "name", sortOrder);
-        }else{
-            dataForPaginate = sortData(dataForPaginate, "id", "asc");
-        }
-        
-        update.paginateResults(dataForPaginate);
-    },
-};
+    if (sortOrder !== "empty") {
+      dataForPaginate = sortData(dataForPaginate, "name", sortOrder);
+    } else {
+      dataForPaginate = sortData(dataForPaginate, "id", "asc");
+    }
+
+    update.paginateResults(dataForPaginate);
+  },
+}
 
 function init() {
-    update.firstPage();
-};
+  update.firstPage();
+}
 
 init();
 changePage();
