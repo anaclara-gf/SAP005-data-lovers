@@ -61,9 +61,11 @@ O projeto foi estruturado com base em duas protopersonas:
 * Saciar alguma curiosidade sobre algum personagem específico
 * Ter mais tempo para seus hobbies
 
+
 **_História do usuário_**
 
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
+
 
 **Critérios de aceitação**
 * [ ] O usuário pode filtrar os personagens em algumas características (status, espécie e gênero);
@@ -100,9 +102,11 @@ O projeto foi estruturado com base em duas protopersonas:
 * Conhecer os personagens para entender a complexidade da série
 * Ter uma experiência agradável em relação ao design da aplicação
 
+
 **_História do usuário_**
 
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
+
 
 **Critérios de aceitação**
 * [ ] O usuário pode pesquisar um personagem pelo nome na caixa de pesquisa;
@@ -214,11 +218,15 @@ O servidor inciará na **porta:5000** <http://localhost:5000>
 
 
 Os arquivos principais estão na pasta _src_ que contém:
-### `src/index.html`: Onde está a estrutura da aplicação, que sera exibida ao usuário. Este arquivo contém a marcação HTML, chama o CSS, e serve para indicar quais scripts serão utilizados.
 
-### `src/main.js`: Onde se localiza todos os códigos que tenham a ver com a exibição dos dados na tela. Com isto nos referimos basicamente à interação com o DOM. Operações como criação de nós, registro de manejadores de eventos (_event listeners_) e etc.
+### `src/index.html`: 
+Onde está a estrutura da aplicação, que sera exibida ao usuário. Este arquivo contém a marcação HTML, chama o CSS, e serve para indicar quais scripts serão utilizados.
 
-### `src/data.js`: Contem toda a funcionalidade que corresponda a obter, processar e manipular dados, como as funções:
+### `src/main.js`: 
+Onde se localiza todos os códigos que tenham a ver com a exibição dos dados na tela. Com isto nos referimos basicamente à interação com o DOM. Operações como criação de nós, registro de manejadores de eventos (_event listeners_) e etc.
+
+### `src/data.js`: 
+Contem toda a funcionalidade que corresponda a obter, processar e manipular dados, como as funções:
 
 * `sortData(data, sortBy, sortOrder)`: esta função recebe três parâmetros. O primeiro, `data`, nos entrega os dados. O segundo, `sortBy`, diz respeito a qual das informações quer usar para ordenar. O terceiro, `sortOrder`, indica se quer ordenar de maneira crescente ou decrescente.
 
@@ -230,9 +238,11 @@ Os arquivos principais estão na pasta _src_ que contém:
 
 * `computeStats(data)`: essa função nos permite fazer a porcentagem de um dado específico em relação ao total.
 
-### `src/data`: Nesta pasta está o arquivo `rickandmorty.js`, utilizado como banco de dados da aplicação. 
+### `src/data`: 
+Nesta pasta está o arquivo `rickandmorty.js`, utilizado como banco de dados da aplicação. 
 
-### `test/data.spec.js`: É onde está implementado os teste unitários das funções implementadas no arquivo
+### `test/data.spec.js`: 
+É onde está implementado os teste unitários das funções implementadas no arquivo
 `data.js`.
 
 
