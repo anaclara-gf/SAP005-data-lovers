@@ -2,7 +2,7 @@
 
 # Rick e Morty
 
-![image](https://user-images.githubusercontent.com/37550557/101235397-1550fe80-36a7-11eb-8083-b6d4fbe80de9.png)
+![image](https://user-images.githubusercontent.com/37550557/101245270-5f0f0880-36ea-11eb-97fd-7bfca3a45200.png)
 
 
 ## Índice
@@ -134,12 +134,12 @@ Os arquivos principais estão na pasta _src_ que contém:
   contém a marcação HTML, chama o CSS, e serve para indicar quais
 scripts serão utilizados.
 
-*`src/main.js`: O `src/main.js` é onde se localiza todos os códigos que tenham a ver
+* `src/main.js`: O `src/main.js` é onde se localiza todos os códigos que tenham a ver
 com a exibição dos dados na tela. Com isto nos referimos basicamente à interação
 com o DOM. Operações como criação de nós, registro de manejadores de eventos
 (_event listeners_ ou _event handlers_) e etc.
 
-*`src/data.js`: Contem toda a funcionalidade que corresponda a
+* `src/data.js`: Contem toda a funcionalidade que corresponda a
 obter, processar e manipular dados, como as funções:
 
 * `filterData(data, condition)`: esta função recebe os dados e nos retorna
@@ -153,7 +153,7 @@ se quer ordenar de maneira crescente ou decrescente.
 * `computeStats(data)`: essa função nos permite fazer cálculos estatísticos
 básicos para serem exibidos de acordo com o que os dados permitem.
 
-*`src/data`: Nesta pasta estão os dados de diferentes fontes..
+* `src/data`: Nesta pasta estão os dados de diferentes fontes..
 
 * `test/data.spec.js`: É onde esta implementado os teste unitários das funções implementadas no arquivo
 `data.js`.
