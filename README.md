@@ -65,17 +65,17 @@ O projeto foi estruturado com base em duas protopersonas:
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
 
 **Critérios de aceitação**
-[] O usuário pode filtrar os personagens em algumas características (status, espécie e gênero);
-[] O filtro deve retornar todos os personagens com a característica selecionada;
-[] O acesso pode ser feito por qualquer dispositivo;
-[] A pesquisa deve retornar o número de personagens com a seguinte característica e a porcentagem em relação ao total de personagens.
+* [ ] O usuário pode filtrar os personagens em algumas características (status, espécie e gênero);
+* [ ] O filtro deve retornar todos os personagens com a característica selecionada;
+* [ ] O acesso pode ser feito por qualquer dispositivo;
+* [ ] A pesquisa deve retornar o número de personagens com a seguinte característica e a porcentagem em relação ao total de personagens.
 
 **Definição de Pronto**
-[] A página ser responsiva;
-[] Código passando pelo linter (está de acordo com o guia de estilos);
-[] A função relativa ao filtro deve ter um teste no _data.spec.js_;
-[] A pesquisa deve retornar o valor desejado;
-[] O código está no repositório.
+* [ ] A página ser responsiva;
+* [ ] Código passando pelo linter (está de acordo com o guia de estilos);
+* [ ] A função relativa ao filtro deve ter um teste no _data.spec.js_;
+* [ ] A pesquisa deve retornar o valor desejado;
+* [ ] O código está no repositório.
 
 
 ### 4.2 Usuário Casual: Mariana
@@ -103,19 +103,19 @@ O projeto foi estruturado com base em duas protopersonas:
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
 
 **Critérios de aceitação**
-[] O usuário pode pesquisar um personagem pelo nome na caixa de pesquisa;
-[] O usuário não deve poder fazer uma pesquisa com a caixa de pesquisa em branco;
-[] A resposta da pesquisa deve retornar todos os personagens que contém a palavra pesquisada e não deve ser case sensitive;
-[] O acesso pode ser feito por qualquer dispositivo;
-[] A pesquisa deve retornar o número de personagens com o respectivo nome pesquisado e a porcentagem em relação ao total de personagens;
-[] Se não existir um personagem com aquele nome, deve retornar a mensagem "Não foi encontrado nenhum resultado para sua busca".
+* [ ] O usuário pode pesquisar um personagem pelo nome na caixa de pesquisa;
+* [ ] O usuário não deve poder fazer uma pesquisa com a caixa de pesquisa em branco;
+* [ ] A resposta da pesquisa deve retornar todos os personagens que contém a palavra pesquisada e não deve ser case sensitive;
+* [ ] O acesso pode ser feito por qualquer dispositivo;
+* [ ] A pesquisa deve retornar o número de personagens com o respectivo nome pesquisado e a porcentagem em relação ao total de personagens;
+* [ ] Se não existir um personagem com aquele nome, deve retornar a mensagem "Não foi encontrado nenhum resultado para sua busca".
 
 **Definição de Pronto**
-[] A página ser responsiva;
-[] Código passando pelo linter (está de acordo com o guia de estilos);
-[] A função relativa à pesquisa deve ter um teste no _data.spec.js_;
-[] A pesquisa deve retornar o valor desejado;
-[] O código está no repositório.
+* [ ] A página ser responsiva;
+* [ ] Código passando pelo linter (está de acordo com o guia de estilos);
+* [ ] A função relativa à pesquisa deve ter um teste no _data.spec.js_;
+* [ ] A pesquisa deve retornar o valor desejado;
+* [ ] O código está no repositório.
 
 
 ## 5. Protótipo de baixa fidelidade
