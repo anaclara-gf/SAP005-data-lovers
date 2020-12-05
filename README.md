@@ -2,7 +2,7 @@
 
 # Rick e Morty
 
-![image](https://user-images.githubusercontent.com/37550557/101245270-5f0f0880-36ea-11eb-97fd-7bfca3a45200.png)
+![image](https://user-images.githubusercontent.com/37550557/101245393-510db780-36eb-11eb-94ac-8c90b1822017.png)
 
 
 ## Índice
