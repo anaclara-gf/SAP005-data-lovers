@@ -99,7 +99,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Conhecer os personagens para entender a complexidade da série
 * Ter uma experiência agradável em relação ao design da aplicação
 
-**_História do usuário 2_**
+**_História do usuário_**
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
 
 **Critérios de aceitação**
