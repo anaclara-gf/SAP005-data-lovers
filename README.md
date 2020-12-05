@@ -44,22 +44,22 @@ O projeto foi estruturado com base em duas protopersonas:
 ### Usuário Potencial: Gabriel
 
 **Informações Demográficas**
-25 anos
-Casado
-Geek
-Engenheiro de Software
+* 25 anos
+* Casado
+* Geek
+* Engenheiro de Software
 
 **Comportamentos**
-Assiste animações adultas
-É curioso em aprofundar-se em informações sobre assuntos do seu interesse
-Joga todos os dias (computador e/ou jogos de tabuleiro)
-Utiliza pouco redes sociais
-Gosta de aprofundar os tópicos de conversa com pessoas próximas
+* Assiste animações adultas
+* É curioso em aprofundar-se em informações sobre assuntos do seu interesse
+* Joga todos os dias (computador e/ou jogos de tabuleiro)
+* Utiliza pouco redes sociais
+* Gosta de aprofundar os tópicos de conversa com pessoas próximas
 
 **Necessidades e objetivos**
-Relembrar informações de personagens para assistir a nova temporada porque faz tempo que assistiu a temporada anterior
-Saciar alguma curiosidade sobre algum personagem específico
-Ter mais tempo para seus hobbies
+* Relembrar informações de personagens para assistir a nova temporada porque faz tempo que assistiu a temporada anterior
+* Saciar alguma curiosidade sobre algum personagem específico
+* Ter mais tempo para seus hobbies
 
 **_História do usuário 1_**
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
@@ -81,23 +81,23 @@ Ter mais tempo para seus hobbies
 ### Usuário Casual: Mariana
 
 **Informações Demográficas**
-24 anos
-Casada
-Estudante
-Cult
+* 24 anos
+* Casada
+* Estudante
+* Cult
 
 **Comportamentos**
-Viciada em redes sociais
-Gosta de acompanhar as tendências
-Tem muito interesse em design
-Gosta de conversar sobre os interesses de pessoas próximas
-Faz trabalhos manuais no tempo livre
+* Viciada em redes sociais
+* Gosta de acompanhar as tendências
+* Tem muito interesse em design
+* Gosta de conversar sobre os interesses de pessoas próximas
+* Faz trabalhos manuais no tempo livre
 
 **Necessidades e objetivos**
-Quer saber mais sobre os assuntos que o marido gosta
-Entender a história da série para conversar com o marido
-Conhecer os personagens para entender a complexidade da série
-Ter uma experiência agradável em relação ao design da aplicação
+* Quer saber mais sobre os assuntos que o marido gosta
+* Entender a história da série para conversar com o marido
+* Conhecer os personagens para entender a complexidade da série
+* Ter uma experiência agradável em relação ao design da aplicação
 
 **_História do usuário 2_**
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
