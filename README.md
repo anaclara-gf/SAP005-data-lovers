@@ -23,12 +23,10 @@
 ## 1. Introdução
 Este projeto consiste na criação de uma aplicação web voltada principalmente para Jovens e Adultos que assistem e gostam da Série de Rick e Morty. Sua interface é simples e amigável para que usuários possam acessar, pesquisar, filtrar e ordenar informações sobre os personagens. Os dados estão dispostos de forma acessível em cards com duas faces. Seu design foi criado pensando na responsividade.
 
-
 &nbsp;
 ## 2. Definição de produto
 O produto tem como objetivo oferecer ferramentas que auxiliam o usuário a buscar informações a respeito 
 dos personagens da série.
-
 
 &nbsp;
 ## 3. Objetivos
@@ -38,7 +36,6 @@ Os objetivos do produto são:
 * Desenvolvimento da funcionalidade de ordenação que auxilia o usuário a aprimorar sua experiência de pesquisa;
 * Construção de testes unitários;
 * Responsividade do site.
-
 
 &nbsp;
 ## 4. Histórias de Usuários
@@ -64,8 +61,6 @@ O projeto foi estruturado com base em duas protopersonas:
 * Saciar alguma curiosidade sobre algum personagem específico
 * Ter mais tempo para seus hobbies
 
-
-&nbsp;
 ### _História do usuário_  
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
 
@@ -84,6 +79,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * [ ] O código está no repositório.
 
 
+&nbsp;
 ### 4.2 Usuário Casual: Mariana
 
 **Informações Demográficas**
@@ -106,7 +102,6 @@ O projeto foi estruturado com base em duas protopersonas:
 * Ter uma experiência agradável em relação ao design da aplicação
 
 
-&nbsp;
 ### _História do usuário_  
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
 
