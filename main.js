@@ -43,48 +43,65 @@ const html = {
     clearFilterOptions: document.getElementById("filter-options-clear"),
 };
 
+const pageUtils = {
+  clearSearch(targetId) {
+    pageDefinitions.page = 1;
+    html.filterOptions.classList.remove("show");
+    html.showPercentage.classList.add("page-disabled");
+    html.paginationButtonControls.classList.add("page-disabled");
+    html.numberOfPages.innerHTML = "";
+    html.showPercentage.innerHTML = "";
+  
+    if(targetId !== html.chooseSortOrder.id){
+      searchDefinitions.searchOrder = "empty";
+      html.chooseSortOrder.value = "empty";
+    }
+    if(targetId !== html.filterValuesButton.id && targetId !== html.chooseSortOrder.id){
+      pageUtils.uncheckFilters();
+      searchDefinitions.searchFilter = [];
+    }
+    if(targetId !== html.searchButton.id && targetId !== html.filterValuesButton.id && targetId !== html.chooseSortOrder.id){
+      html.searchText.value = "";
+      searchDefinitions.searchText = html.searchText.value;
+    }
+  },
+  clearPages(targetId) {
+    pageUtils.clearSearch(targetId);
+  
+    html.moreAboutPage.classList.add("page-disabled");
+    html.paragraphNoResults.classList.add("page-disabled");
+    html.charactersPage.classList.add("page-disabled");
+    html.home.classList.add("page-disabled");
+  
+    html.menuHamburguerItems.classList.remove("show");
+  },
+  uncheckFilters(checked = false) {
+    const allFilterItems = html.filterCheckbox;
+    allFilterItems.forEach((filterItem) => {
+      filterItem.checked = checked;
+    });
+  },
+  checkedFilters(filterCategory) {
+    let filterValues = [];
+    for (let i = 0; i < filterCategory.length; i++) {
+      if (filterCategory[i].checked) {
+        filterValues.push(filterCategory[i].value);
+      }
+    }
+    return filterValues;
+  },
+}
+
 const loadHomePage = () => {
-  html.searchText.value = "";
-  searchDefinitions.searchText = html.searchText.value;
-  uncheckFilters();
-  searchDefinitions.searchFilter = "";
-  html.filterOptions.classList.remove("show");
+  pageUtils.clearPages()
   html.home.classList.remove("page-disabled");
-  html.charactersPage.classList.add("page-disabled");
-  html.menuHamburguerItems.classList.remove("show");
-  html.paragraphNoResults.classList.add("page-disabled");
-  html.moreAboutPage.classList.add("page-disabled");
 };
 
 const loadCharactersPage = () => {
-  pageDefinitions.page = 1;
-  html.searchText.value = "";
-  searchDefinitions.searchText = html.searchText.value;
-  searchDefinitions.searchOrder = "empty";
-  html.home.classList.add("page-disabled");
+  pageUtils.clearPages();
   html.charactersPage.classList.remove("page-disabled");
   update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
   buttonsControls.createListeners();
-  html.menuHamburguerItems.classList.toggle("show");
-  html.moreAboutPage.classList.add("page-disabled");
-  html.showPercentage.classList.add("page-disabled");
-};
-
-const uncheckFilters = (checked = false) => {
-  const allFilterItems = html.filterCheckbox;
-  allFilterItems.forEach((filterItem) => {
-    filterItem.checked = checked;
-  });
-};
-
-const checkedFilters = (filterCategory) => {
-  let filterValues = [];
-  for (let i = 0; i < filterCategory.length; i++) {
-    if (filterCategory[i].checked) {
-      filterValues.push(filterCategory[i].value);
-    }
-  }
-  return filterValues;
 };
 
 function changePage(){
@@ -96,86 +113,58 @@ function changePage(){
         html.filterOptions.classList.toggle("show");
     });
     
-    html.menuMoreAboutButton.addEventListener("click", () => {
-      html.home.classList.add("page-disabled");
-      html.charactersPage.classList.add("page-disabled");
-      html.moreAboutPage.classList.remove("page-disabled");
-      html.menuHamburguerItems.classList.remove("show");
+    html.clearFilterOptions.addEventListener("click", () => {
+      pageUtils.uncheckFilters();
     });
 
-    html.menuCharactersPageButton.addEventListener("click", loadCharactersPage);
-
-    html.backToCharactersPage.addEventListener("click", loadCharactersPage);
-
-    html.filterValuesButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        pageDefinitions.page = 1;
-        searchDefinitions.searchOrder = "empty";
-        searchDefinitions.searchOrder = "empty";
-        html.chooseSortOrder.value = "empty";
-        html.showPercentage.innerHTML = "";
-        html.showPercentage.classList.remove("page-disabled");
-        html.filterOptions.classList.remove("show");
-        html.charactersPage.classList.add("page-disabled");
-        html.paginationButtonControls.classList.add("page-disabled")
-        html.paragraphNoResults.classList.add("page-disabled");
-        searchDefinitions.searchFilter = checkedFilters(html.filterCheckbox);
-        update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
-        buttonsControls.createListeners();
-        html.numberOfPages.innerHTML = "";
-        createItemsIndex();
-    });
-
+   
     html.searchButton.addEventListener("click", (event) => {
         event.preventDefault();
         if(html.searchText.value === ""){
             alert("Digite um nome para sua pesquisa!")
         }else{
-            if(!html.home.classList.contains("page-disabled")){
-                html.home.classList.add('page-disabled');
-            }
-            html.charactersPage.classList.add("page-disabled");
-            html.paginationButtonControls.classList.add("page-disabled")
-            html.paragraphNoResults.classList.add("page-disabled");
-            html.moreAboutPage.classList.add("page-disabled");
-            pageDefinitions.page = 1;
-            searchDefinitions.searchOrder = "empty";
-            html.chooseSortOrder.value = "empty";
-            html.numberOfPages.innerHTML = "";
-            html.showPercentage.innerHTML = "";
+            pageUtils.clearPages(event.target.id)
+
+            html.charactersPage.classList.remove("page-disabled");
             html.showPercentage.classList.remove("page-disabled");
             searchDefinitions.searchText = html.searchText.value;
-            uncheckFilters();
-            searchDefinitions.searchFilter = "";
-            html.filterOptions.classList.remove("show"); 
+    
             update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
-            html.numberOfPages.innerHTML = "";
-            createItemsIndex(); 
-
-            if(pageDefinitions.totalPage > 1){
-              html.paginationButtonControls.classList.remove("page-disabled")
-              buttonsControls.createListeners();
-            }          
         }
     });
     
+    html.filterValuesButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      pageUtils.clearSearch(event.target.id);
+      html.showPercentage.classList.remove("page-disabled");
+      
+      searchDefinitions.searchFilter = pageUtils.checkedFilters(html.filterCheckbox);
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
+  });
+
     html.chooseSortOrder.addEventListener("change", (event) => {
-        pageDefinitions.page = 1;
-        searchDefinitions.searchText = html.searchText.value;
-        searchDefinitions.searchOrder = event.target.value;
-        update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
-        buttonsControls.createListeners();
-        html.numberOfPages.innerHTML = "";
-        html.showPercentage.classList.add("page-disabled");
-        createItemsIndex();
+      pageUtils.clearSearch(event.target.id);
+
+      if(searchDefinitions.searchText || searchDefinitions.searchFilter.length){
+        html.showPercentage.classList.remove("page-disabled");
+      }
+      searchDefinitions.searchOrder = event.target.value;
+
+      update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
     });
+
 
     html.menuHomeButton.addEventListener("click", loadHomePage);
 
     html.homeByLogoImage.addEventListener("click", loadHomePage);
 
-    html.clearFilterOptions.addEventListener("click", () => {
-      uncheckFilters();
+    html.menuCharactersPageButton.addEventListener("click", loadCharactersPage);
+
+    html.backToCharactersPage.addEventListener("click", loadCharactersPage);
+
+    html.menuMoreAboutButton.addEventListener("click", () => {
+      pageUtils.clearPages();
+      html.moreAboutPage.classList.remove("page-disabled");
     });
 }
 
@@ -189,7 +178,7 @@ const pageDefinitions = {
 const searchDefinitions = {
     searchText: "",
     searchOrder: "empty",
-    searchFilter: "",
+    searchFilter: [],
 };
 
 function firstPagePrintCard(card) {
@@ -233,30 +222,6 @@ function printCard(card) {
     }
     return cards;
 }
-    // let firstEpisodeAppeared;
-
-    // <p class="first-episode-name">Primeiro (ou único) episódio que aparece: ${firstEpisode.name}</p>
-    // <p class=${lastEpisode.name === firstEpisode.name ? "page-disabled" : "last-episode-name"}>Último episódio que aparece: ${lastEpisode.name}</p>
-
-    // fetch(card.episode[0])
-    //     .then(response => response.json())
-    //     .then(function(data){
-    //         let nameFirstEpisode = document.createElement("p");
-    //         firstEpisodeAppeared = data.name
-    //         nameFirstEpisode.appendChild(document.createTextNode("First (or only) episode in wich it appears: "+data.name));
-    //         listItem.appendChild(nameFirstEpisode);
-    //     })
-    
-    // fetch(card.episode[card.episode.length-1])
-    //     .then(response => response.json())
-    //     .then(function(data){
-    //         if(data.name !== firstEpisodeAppeared){
-    //             let nameLastEpisode = document.createElement("p");
-    //             nameLastEpisode.appendChild(document.createTextNode("Last episode in wich it appears: "+data.name));
-    //             listItem.appendChild(nameLastEpisode);
-    //         }
-    //     })
-
 
 const buttonsNumbers = {
   calculateMaxVisible() {
@@ -286,8 +251,10 @@ const buttonsNumbers = {
       maxRight,
     } = buttonsNumbers.calculateMaxVisible();
     html.paginateNumbers.innerHTML = "";
+    html.paginationButtonControls.classList.add("page-disabled");
 
     if(maxRight!==1){
+      html.paginationButtonControls.classList.remove("page-disabled");
       for (let actualPage = maxLeft; actualPage <= maxRight; actualPage++) {
         buttonsNumbers.create(actualPage);
       }
@@ -392,12 +359,14 @@ const update = {
           createItemsIndex();
           html.charactersPage.classList.remove("page-disabled");
         }else{
+          pageUtils.clearPages();
           html.paragraphNoResults.classList.remove("page-disabled");
         }
         
     },
     charactersPage(searchText, searchFilter, sortOrder = "empty") {
         let dataForPaginate = data.results.slice();
+        const  namesForComputeStats = searchFilter.slice();
         let filterData = [];
         let dataSpeciesFilter = [];
         let dataStatusFilter = [];
@@ -405,8 +374,9 @@ const update = {
         
         if(searchText){
             dataForPaginate = search(dataForPaginate, "name", searchText);
+            namesForComputeStats.push(searchText);
         }
-        if (searchFilter) {
+        if (searchFilter.length) {
           for (let eachSearchFilter of searchFilter) {
             if (eachSearchFilter === "human" || eachSearchFilter === "alien" || eachSearchFilter === "unknown") {
                 dataSpeciesFilter = dataSpeciesFilter.concat(filter(dataForPaginate, "species", eachSearchFilter));
@@ -445,19 +415,17 @@ const update = {
     }
 
     update.paginateResults(dataForPaginate);
-    if(searchFilter){
-      update.createStatistics(dataForPaginate, searchFilter);
-    }else if(searchText){
-      update.createStatistics(dataForPaginate, searchText);
-    }
+  
+    update.createStatistics(dataForPaginate, namesForComputeStats);
+
+    buttonsControls.createListeners();
+    createItemsIndex();
   },
   createStatistics(filterData, filterDataName){
     const percentage = computeStats(data.results.length, filterData.length);
-    html.showPercentage.innerHTML = `Sua pesquisa "${typeof filterDataName === Object ? filterDataName.join(", ") : filterDataName}" retornou ${percentage}% dos personagens`;
+    html.showPercentage.innerHTML = `Sua pesquisa "${filterDataName.join(", ")}" retornou ${percentage}% dos personagens`;
   }
 }
-
-
 
 function init() {
   update.firstPage();
@@ -465,3 +433,27 @@ function init() {
 
 init();
 changePage();
+
+    // let firstEpisodeAppeared;
+
+    // <p class="first-episode-name">Primeiro (ou único) episódio que aparece: ${firstEpisode.name}</p>
+    // <p class=${lastEpisode.name === firstEpisode.name ? "page-disabled" : "last-episode-name"}>Último episódio que aparece: ${lastEpisode.name}</p>
+
+    // fetch(card.episode[0])
+    //     .then(response => response.json())
+    //     .then(function(data){
+    //         let nameFirstEpisode = document.createElement("p");
+    //         firstEpisodeAppeared = data.name
+    //         nameFirstEpisode.appendChild(document.createTextNode("First (or only) episode in wich it appears: "+data.name));
+    //         listItem.appendChild(nameFirstEpisode);
+    //     })
+    
+    // fetch(card.episode[card.episode.length-1])
+    //     .then(response => response.json())
+    //     .then(function(data){
+    //         if(data.name !== firstEpisodeAppeared){
+    //             let nameLastEpisode = document.createElement("p");
+    //             nameLastEpisode.appendChild(document.createTextNode("Last episode in wich it appears: "+data.name));
+    //             listItem.appendChild(nameLastEpisode);
+    //         }
+    //     })
