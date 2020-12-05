@@ -41,7 +41,7 @@ Os objetivos do produto são:
 ## 4. Histórias de Usuários
 O projeto foi estruturado com base em duas protopersonas:
 
-### Usuário Potencial: Gabriel
+### 4.1 Usuário Potencial: Gabriel
 
 **Informações Demográficas**
 * 25 anos
@@ -78,7 +78,7 @@ O projeto foi estruturado com base em duas protopersonas:
 [] O código está no repositório.
 
 
-### Usuário Casual: Mariana
+### 4.2 Usuário Casual: Mariana
 
 **Informações Demográficas**
 * 24 anos
