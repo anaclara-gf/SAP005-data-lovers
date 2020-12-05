@@ -24,11 +24,13 @@
 Este projeto consiste na criação de uma aplicação web voltada principalmente para Jovens e Adultos que assistem e gostam da Série de Rick e Morty. Sua interface é simples e amigável para que usuários possam acessar, pesquisar, filtrar e ordenar informações sobre os personagens. Os dados estão dispostos de forma acessível em cards com duas faces. Seu design foi criado pensando na responsividade.
 
 
+&nbsp;
 ## 2. Definição de produto
 O produto tem como objetivo oferecer ferramentas que auxiliam o usuário a buscar informações a respeito 
 dos personagens da série.
 
 
+&nbsp;
 ## 3. Objetivos
 Os objetivos do produto são:
 * Apresentação dos dados sobre cada personagem em cards de duas faces;
@@ -38,6 +40,7 @@ Os objetivos do produto são:
 * Responsividade do site.
 
 
+&nbsp;
 ## 4. Histórias de Usuários
 O projeto foi estruturado com base em duas protopersonas:
 
@@ -62,6 +65,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Ter mais tempo para seus hobbies
 
 
+&nbsp;
 ### _História do usuário_  
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
 
@@ -102,6 +106,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Ter uma experiência agradável em relação ao design da aplicação
 
 
+&nbsp;
 ### _História do usuário_  
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
 
@@ -122,6 +127,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * [ ] O código está no repositório.
 
 
+&nbsp;
 ## 5. Protótipo de baixa fidelidade
 
 Inicialmente, fizemos algumas versões para o site para testar a disposição dos objetos na página, 
@@ -131,6 +137,7 @@ A imagem abaixo ilustra uma das últimas versões do protótipo, já bem próxim
 ![image](https://user-images.githubusercontent.com/37550557/101233629-ec753d00-3697-11eb-832d-0b7a8527c3f6.png)
 
 
+&nbsp;
 ## 6. Estrutura e funcionalidade
 
 A estrutura é clara, objetiva e funciona de maneira responsiva.
@@ -161,11 +168,13 @@ A imagem abaixo mostra três cards, o primeiro e o terceiro (personagns Rick San
 ![image](https://user-images.githubusercontent.com/37550557/101235397-1550fe80-36a7-11eb-8083-b6d4fbe80de9.png)
 
 
+&nbsp;
 ## 7. Ferramentas
 
 Para a construção da aplicação foi utilizado o software Visual Studio Code com a extenção do Node-js. A marcação foi realizada em HTML e a estilização em CSS. Sua programação foi realizada em vanilla JavaScript, contendo arquivos _main.js_, responsável pela interação dos elementos DOM e os eventos, e o _data.js_, responsável pelas funções de filtro, ordenação, pesquisa e cálculo. Os dados foram importados do arquivo de dados _rickandmorty.js_.
 
 
+&nbsp;
 ## 8. Considerações técnicas
 
 O arquivo está estruturado da seguinte forma:
@@ -195,6 +204,7 @@ O arquivo está estruturado da seguinte forma:
 ```
 
 
+&nbsp;
 ## 9. Deploy
 
 Para iniciar, é necessário ter instalado na máquina as seguintes ferramentas:
@@ -215,6 +225,7 @@ $ npm start
 O servidor inciará na **porta:5000** <http://localhost:5000>
 
 
+&nbsp;
 Os arquivos principais estão na pasta _src_ que contém:
 
 ### `src/index.html`: 
@@ -244,6 +255,7 @@ Nesta pasta está o arquivo `rickandmorty.js`, utilizado como banco de dados da 
 `data.js`.
 
 
+&nbsp;
 ## 10. Autoria 
 
 Este projeto foi realizado por Ana Clara Garcia Farah e Luciana Pereira com base no projeto da Laboratória.
