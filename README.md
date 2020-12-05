@@ -220,7 +220,6 @@ $ npm start
 O servidor inciará na **porta:5000** <http://localhost:5000>
 
 
-&nbsp;
 Os arquivos principais estão na pasta _src_ que contém:
 
 ### `src/index.html`: 
@@ -232,15 +231,15 @@ Onde se localiza todos os códigos que tenham a ver com a exibição dos dados n
 ### `src/data.js`: 
 Contem toda a funcionalidade que corresponda a obter, processar e manipular dados, como as funções:
 
-    * `sortData(data, sortBy, sortOrder)`: esta função recebe três parâmetros. O primeiro, `data`, nos entrega os dados. O segundo, `sortBy`, diz respeito a qual das informações quer usar para ordenar. O terceiro, `sortOrder`, indica se quer ordenar de maneira crescente ou decrescente.
+* `sortData(data, sortBy, sortOrder)`: esta função recebe três parâmetros. O primeiro, `data`, nos entrega os dados. O segundo, `sortBy`, diz respeito a qual das informações quer usar para ordenar. O terceiro, `sortOrder`, indica se quer ordenar de maneira crescente ou decrescente.
 
-    * `sortDataArrayLength(data, sortBy, sortOrder)`: esta função é muito similar a `sortData`, mas funciona para ordenar os intens de acordo com o comprimento de um array. 
+* `sortDataArrayLength(data, sortBy, sortOrder)`: esta função é muito similar a `sortData`, mas funciona para ordenar os intens de acordo com o comprimento de um array. 
 
-    * `search(data, searchBy, searchText)`: esta função recebe três parâmetros. O primeiro, `data`, nos entrega os dados. O segundo, `searchBy`, diz respeito a qual das informações utilizar para a pesquisa. O terceiro `searchText`, indica qual é o texto que deve ser pesquisado.
+* `search(data, searchBy, searchText)`: esta função recebe três parâmetros. O primeiro, `data`, nos entrega os dados. O segundo, `searchBy`, diz respeito a qual das informações utilizar para a pesquisa. O terceiro `searchText`, indica qual é o texto que deve ser pesquisado.
     
-    * `filter(data, filterBy, filterName)`: esta função recebe os dados pelo parâmetro `data` e nos retorna os dados filtrados de acordo com a informação que deve ser utilizada na pesquisa, `filterBy` e com o filtro que o usuário escolheu, `filterName`. 
+* `filter(data, filterBy, filterName)`: esta função recebe os dados pelo parâmetro `data` e nos retorna os dados filtrados de acordo com a informação que deve ser utilizada na pesquisa, `filterBy` e com o filtro que o usuário escolheu, `filterName`. 
 
-    * `computeStats(data)`: essa função nos permite fazer a porcentagem de um dado específico em relação ao total.
+* `computeStats(data)`: essa função nos permite fazer a porcentagem de um dado específico em relação ao total.
 
 ### `src/data`: 
 Nesta pasta está o arquivo `rickandmorty.js`, utilizado como banco de dados da aplicação. 
