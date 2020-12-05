@@ -61,7 +61,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Saciar alguma curiosidade sobre algum personagem específico
 * Ter mais tempo para seus hobbies
 
-**_História do usuário 1_**
+**_História do usuário_**
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
 
 **Critérios de aceitação**
