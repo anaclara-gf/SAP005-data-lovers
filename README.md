@@ -133,7 +133,7 @@ A imagem abaixo ilustra uma das últimas versões do protótipo, já bem próxim
 ![image](https://user-images.githubusercontent.com/37550557/101233629-ec753d00-3697-11eb-832d-0b7a8527c3f6.png)
 
 
-### 6. Estrutura e funcionalidade
+## 6. Estrutura e funcionalidade
 
 A estrutura é clara, objetiva e funciona de maneira responsiva.
 A imagem abaixo mostra como a página inicial do site funciona em dispostivos com telas menores de 767px.
@@ -163,7 +163,7 @@ A imagem abaixo mostra três cards, o primeiro e o terceiro (personagns Rick San
 ![image](https://user-images.githubusercontent.com/37550557/101235397-1550fe80-36a7-11eb-8083-b6d4fbe80de9.png)
 
 
-### 7. Ferramentas
+## 7. Ferramentas
 
 Para a construção da aplicação foi utilizado o software Visual Studio Code com a extenção do Node-js. A marcação foi realizada em HTML e a estilização em CSS. Sua programação foi realizada em vanilla JavaScript, contendo arquivos _main.js_, responsável pela interação dos elementos DOM e os eventos, e o _data.js_, responsável pelas funções de filtro, ordenação, pesquisa e cálculo. Os dados foram importados do arquivo de dados _rickandmorty.js_.
 
@@ -197,7 +197,7 @@ O arquivo está estruturado da seguinte forma:
 ```
 
 
-### 9. Deploy
+## 9. Deploy
 
 Para iniciar, é necessário ter instalado na máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e um editor de texto como o [VSCode](https://code.visualstudio.com/).
