@@ -62,7 +62,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Ter mais tempo para seus hobbies
 
 
-###_História do usuário_
+#### _História do usuário_
 
 "Eu, Gabriel, quero manipular filtros sobre os personagens para aprofundar meu conhecimento sobre a série."
 
@@ -103,7 +103,7 @@ O projeto foi estruturado com base em duas protopersonas:
 * Ter uma experiência agradável em relação ao design da aplicação
 
 
-###_História do usuário_
+#### _História do usuário_
 
 "Eu, Mariana, quero pesquisar sobre os personagens para acompanhar a conversa com meu marido sem ter que ver a série."
 
