@@ -9,122 +9,167 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="header-container">
-      <section class="logo">
-        <button id="logo-image-button"><img id="logo-image" src="img\logo-nome.png"></button>
-      </section>
-
-      <section class="search">
-        <form class="search-form">
-          <input id="search" type="text" placeholder="Insira o nome do personagem">
-          <button id="search-button">&#128269;</button>
-        </form>
-      </section>
-
-      <section class="menu">
-        <nav>
-          <button id="hamburguer">
-            <i><img class="bars-menu" src="img\Hamburger_icon.png"></i>
-          </button>
-          <ul class="menu-container" id="menu-container">
-            <li class="menu-items" >
-              <p id="home"><b>Home</b></p>
-            </li>
-            <li class="menu-items">
-              <p id="characters"><b>Personagens</b></p>
-            </li>
-            <li class="menu-items">
-              <p id="more"><b>Saiba mais</b></p>
-            </li>
-          </ul>
-        </nav>
-      </section>
-    </div>
-  </header>
-
-  <div id="first-page" class="page-active">
-    <main>
-      <section class="synopsis">
-        <div class="synopsis-image">
-          <img src="https://media4.giphy.com/media/l41lI4bYmcsPJX9Go/giphy.gif" class="giphy">
-        </div>
-        <div class="synopsis-text">
-          <h1>Rick and Morty</h1>
-          <p>Rick Sanchez é um cientista genial e alcoólatra que foi morar com a família de sua filha Beth, uma cirurgiã
-            cardíaca de equinos. Ele divide seu tempo entre desenvolver projetos altamente tecnológicos em seu laboratório
-            (garagem da casa de Beth) e levar seu neto de 14 anos Morty em aventuras perigosas e surreais pelo Multiverso.
-            Combinados com tensões preexistentes dentro da família, esses eventos causam ao sensível Morty muito angústia em
-            casa e na escola.</p>
-        </div>
-      </section>
-
-      <section class="main-characters">
-        <p id="main-characters-title"><b>Personagens Principais</b></p>
-        <ul id="main-characters-list" class="characters-list"></ul>
-      </section>
-    </main>
-  </div>
-
-  <div id="characters-page" class="page-disabled">
-    <main>
-      <div class="user-choices">
-        <section class="filter">
-          <button class="filter-title" id="filter-button">Filtros</button>
-          <div class="filter-options" id="filter-options">
-            <p>Species:</p>
-            <label><input type="checkbox" name="filter-option" value="human">Human</label>
-            <label><input type="checkbox" name="filter-option" value="alien">Alien</label>
-            <label><input type="checkbox" name="filter-option" value="unknown">Unknown</label>
-            <p>Status:</p>
-            <label><input type="checkbox" name="filter-option" value="alive">Alive</label>
-            <label><input type="checkbox" name="filter-option" value="dead">Dead</label>
-            <label><input type="checkbox" name="filter-option" value="unknown-status">Unknown</label>
-            <p>Gender:</p>
-            <label><input type="checkbox" name="filter-option" value="female">Female</label>
-            <label><input type="checkbox" name="filter-option" value="male">Male</label>
-            <label><input type="checkbox" name="filter-option" value="genderless">Genderless</label>
-            <label><input type="checkbox" name="filter-option" value="unknown-gender">Unknown</label>
-            <button id="filter-options-button">&#128269;</button>
-          </div>
+  <div id="root">
+    <header class="header">
+      <div class="header-container">
+        <section class="logo">
+          <button id="logo-image-button"><img id="logo-image" src="img\logo-nome.png"></button>
         </section>
-
-        <section class="sort-data">
-          <select name="sort-data" id="sort-by">
-            <option value="empty" id="empty">Ordenar por:</option>
-            <option class="sortOrder-name" value="asc">Nome do personagem: de A a Z</option>
-            <option class="sortOrder-name" value="desc">Nome do personagem: de Z a A</option>
-            <!-- <option class="sortOrder-episodes" value="asc">Nº de episódios em que o personagem aparece: do menor pro maior</option>
-            <option class="sortOrder-episodes" value="desc">Nº de episódios em que o personagem aparece: do maior pro menor</option> -->
-          </select>
+  
+        <section class="search">
+          <form class="search-form">
+            <input id="search" type="text" placeholder="Insira o nome do personagem">
+            <button id="search-button">&#128269;</button>
+          </form>
+        </section>
+  
+        <section class="menu">
+          <nav>
+            <button id="hamburguer">
+              <i><img class="bars-menu" src="img\Hamburger_icon.png"></i>
+            </button>
+            <ul class="menu-container" id="menu-container">
+              <li class="menu-items" >
+                <p id="home"><b>Home</b></p>
+              </li>
+              <li class="menu-items">
+                <p id="characters"><b>Personagens</b></p>
+              </li>
+              <li class="menu-items">
+                <p id="more-about-button"><b>Saiba mais</b></p>
+              </li>
+            </ul>
+          </nav>
         </section>
       </div>
-
-      <section id="paginate">
-        <div class="index-of-page">
-          <p id="number-of-pages"></p>
-          <p id="textItems"></p>
+    </header>
+  
+    <div id="first-page">
+      <main>
+        <section class="synopsis">
+          <div class="synopsis-image">
+            <img src="https://media4.giphy.com/media/l41lI4bYmcsPJX9Go/giphy.gif" class="giphy">
+          </div>
+          <div class="synopsis-text">
+            <h1>Rick and Morty</h1>
+            <p>Rick Sanchez é um cientista genial e alcoólatra que foi morar com a família de sua filha Beth, uma cirurgiã
+              cardíaca de equinos. Ele divide seu tempo entre desenvolver projetos altamente tecnológicos em seu laboratório
+              (garagem da casa de Beth) e levar seu neto de 14 anos Morty em aventuras perigosas e surreais pelo Multiverso.
+              Combinados com tensões preexistentes dentro da família, esses eventos causam ao sensível Morty muito angústia em
+              casa e na escola.</p>
+          </div>
+        </section>
+  
+        <section class="main-characters">
+          <p id="main-characters-title"><b>Personagens Principais</b></p>
+          <ul id="main-characters-list" class="characters-list"></ul>
+        </section>
+      </main>
+    </div>
+  
+    <div id="characters-page" class="page-disabled">
+      <main>
+        <div class="user-choices">
+          <section class="filter">
+            <button class="filter-title" id="filter-button">Filtros</button>
+            <div class="filter-options" id="filter-options">
+              <p>Species:</p>
+              <label><input type="checkbox" name="filter-option" value="human">Human</label>
+              <label><input type="checkbox" name="filter-option" value="alien">Alien</label>
+              <label><input type="checkbox" name="filter-option" value="unknown">Unknown</label>
+              <p>Status:</p>
+              <label><input type="checkbox" name="filter-option" value="alive">Alive</label>
+              <label><input type="checkbox" name="filter-option" value="dead">Dead</label>
+              <label><input type="checkbox" name="filter-option" value="unknown-status">Unknown</label>
+              <p>Gender:</p>
+              <label><input type="checkbox" name="filter-option" value="female">Female</label>
+              <label><input type="checkbox" name="filter-option" value="male">Male</label>
+              <label><input type="checkbox" name="filter-option" value="genderless">Genderless</label>
+              <label><input type="checkbox" name="filter-option" value="unknown-gender">Unknown</label>
+              <button id="filter-options-clear">Limpar Filtros</button>
+              <button id="filter-options-button">&#128269;</button>
+            </div>
+          </section>
+  
+          <section class="sort-data">
+            <select name="sort-data" id="sort-by">
+              <option value="empty" id="empty">Ordenar por:</option>
+              <option class="sortOrder-name" value="ascLetter">Nome do personagem: de A a Z</option>
+              <option class="sortOrder-name" value="descLetter">Nome do personagem: de Z a A</option>
+              <option class="sortOrder-episodes" value="ascNumber">Nº de episódios em que o personagem aparece: do menor pro maior</option>
+              <option class="sortOrder-episodes" value="descNumber">Nº de episódios em que o personagem aparece: do maior pro menor</option>
+            </select>
+          </section>
         </div>
-
-
-        <ul id="list" class="characters-list-page-characters"></ul>
-        <p id="no-results"></p>
-        <div class="pagination">
-          <button class="first">&#171;</button>
-          <button class="prev">&lt;</button>
-          <div class="numbers"></div>
-          <button class="next">&gt;</button>
-          <button class="last">&#187;</button>
+  
+        <section id="paginate">
+          <div class="index-of-page">
+            <p id="number-of-pages"></p>
+            <p id="textItems"></p>
+          </div>
+  
+          <div class="show-percentage">
+            <p id="show-percentage"></p>
+          </div>
+  
+          <ul id="list" class="characters-list-page-characters"></ul>
+          <div class="pagination">
+            <button class="first">&#171;</button>
+            <button class="prev">&lt;</button>
+            <div class="numbers"></div>
+            <button class="next">&gt;</button>
+            <button class="last">&#187;</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  
+    <div id="no-results" class=" no-results page-disabled">
+      <p>Não foi encontrado nenhum resultado para sua busca</p>
+      <button id="back-characters-page">Voltar</button>
+    </div>
+  
+    <div id="more-about" class="page-disabled">
+      <main class="more-about">
+        <div class="review">
+          <p class="review-title">Crítica</p>
+  
+          <img class="review-image" src="img\rick-and-morty-img.jpg">
+    
+          <p class="review-text">Na superfície, Rick e Morty é uma mistura de De Volta Para o Futuro (1985) e Doctor Who (2005-). Porém, quando, já no primeiro episódio, uma simples gag dá conta de enfocar o catarro de um alienígena se transformando num ser vivo, que cresce, atinge a plenitude, a velhice e então morre diante dos olhos dos protagonistas, isso no espaço de alguns poucos segundos, fica claro que entreter o espectador com aventuras repletas de otimismo e inocência não é bem o ponto desta série animada. Muito pelo contrário. Eventos trágicos e absurdos como esse são recorrentes na criação de Dan Harmon e Justin Roiland, que constroem com humor cínico e criatividade aguçada um universo onde o encantamento com novos mundos e espécies rapidamente cede lugar à percepção do quão pequenos, efêmeros e patéticos cada um deles é – incluindo nós mesmos.</p>
+    
+          <p class="review-text">Isso, claro, porque os enxergamos pela ótica de Rick, gênio beberrão que, com uma arma de portal (capaz de abrir passagens interdimensionais), leva seu neto Morty para ajudá-lo em esquemas duvidosos noutros universos. Sarcástico e inconsequente, o cientista parece não se maravilhar com quase nada, mesmo que ele e Morty passem por planetas e aliens dos mais diversos tipos. Imune à beleza da proliferação da vida e da diversidade interplanetária, Rick é um homem seco, descrente quanto a qualquer tipo de vida conseguir se desenvolver sem egoísmo. Portanto, segundo esse prisma, o sentido de estar vivo é pensar apenas em si mesmo. Dono desse niilismo dawkiniano (pensem numa filosofia que mistura Nietzsche e Richard Dawkins), o protagonista, porém, não consegue evitar uma bússola moral intrínseca à sua personalidade, denunciando um indivíduo que, no passado, equilibrava gentileza e pragmatismo tão bem quanto um Doc Brown ou o famoso Time Lord.</p>
+    
+          <p class="review-text">E é daí que Rick e Morty extrai grande parte do seu humor certeiro, pois conversa diretamente com as gerações que vivenciaram esse início de século, cada vez mais céticas após testemunhar todo o tipo de horror e mesquinharia humana num tempo em que elas chegam a nós praticamente ao vivo e de qualquer parte do mundo. A desesperança de Rick frente às maravilhas do universo não é diferente da de qualquer cidadão comum ciente de que jamais viverá o suficiente para poder ver alguma mudança realmente implementada, apesar dos avanços tecnológicos e dos conhecimentos – ou daquela de um pequeno robô ao tomar consciência de que a única função de sua existência é passar a manteiga na mesa do café da manhã. Por isso acaba sendo cômica a forma leviana com que Rick usa os artifícios científicos: criando um parque de diversões dentro do corpo de um sem-teto, usando um raio de miniaturização; paralisando o tempo e o espaço apenas para que seus netos possam arrumar a casa antes dos pais chegarem e arquitetando uma invasão aos complexos sonhos do professor de matemática para Morty melhorar sua nota.</p>
+    
+          <p class="review-text">Mas se Rick é a inconsequência e o egocentrismo em pessoa, do outro lado, seu neto funciona como um contraponto que permite ao espectador não se entregar a um exercício de puro niilismo, o que tornaria a obra muito antipática e esquecível. Naquele que é o melhor episódio da primeira temporada, Morty assume a liderança de uma das aventuras e leva Rick para, aquilo que ele romantiza ser, o cenário perfeito para um ato heroico, apenas para descobrir um mundo tão burocrático e assustador quanto a Terra. E, embora sejamos capazes de rir das escatologias, nosso riso quase nunca é direcionado àquelas figuras, como acontece em Family Guy (1999-) e Os Simpsons (1989-), por exemplo. E aqui é impossível não simpatizar por Morty, enxergando-o de forma tridimensional, pois ao perceber que existe crueldade mesmo num mundo fantasioso, o menino se entrega, não ao cinismo do avô, mas à tristeza e à melancolia.</p>
+    
+          <p class="review-text">Na verdade, também não é difícil entender o próprio Rick, principalmente quando percebemos que os problemas intergalácticos só são tão divertidos porque se assemelham aos nossos terráqueos. E um movimento dos habitantes de Plutão que exige o reconhecimento do astro como planeta, por exemplo, se parece muito com o dos negadores do Aquecimento Global e a relação que mantêm com as grandes corporações.</p>
+    
+          <p class="review-text">Claro que essa ideia mais geral é construída com uma série de diálogos ácidos dragados direto das comédias screwball, todos repletos de referências que tornam punch lines como “Eu realmente cronenberguizei o mundo”, piadinhas de nicho divertidas de catar. Para além disso, ao invés de segregar um espectador que pode não fazer ideia de quem é David Cronenberg, essas sacadas do roteiro acabam sendo desnecessárias para compreender o desenrolar das tramas, embora enriqueçam a narrativa para os que entendem que uma referência a Jurassic Park (1993) carrega também a temática dos abusos megalomaníacos da ciência, assim como um episódio nomeado em homenagem ao diretor M. Night Shyamalan, certamente envolverá alguma reviravolta que merece a expectativa.</p>
+    
+          <p class="review-text">Além disso, Rick e Morty parece focado na tarefa de criar um mundo povoado e com vida própria, não tendo medo de investir um capítulo inteiro na programação de TV multidimensional, em que versões mais esquisitas dos shows terráqueos reafirmam que a estupidez é universal. E, em meio a isso, consegue evocar momentos emblemáticos e melancólicos, como o desfecho que envolve o enterro de dois cadáveres conhecidos no jardim da família Smith. Da mesma forma, é um seriado capaz de criar subtramas tão interessantes quanto a dos protagonistas e, em pelo menos dois episódios, as desventuras de Summer, Jerry e Beth roubam os holofotes. Num graças a Snuffles e no outro pelos Meeseeks – vocês vão reconhecê-los, e não devem deixar de notar que os conflitos desses seres azuis giram em torno de uma existência indesejada e dolorosa. Tema esse que, apesar de repetido à exaustão, parece se equilibrar com uma humanidade insuspeita numa série em que o protagonista acha que uma boa gag envolve peidos e frases desconexas.</p>
+    
+          <p class="review-text">P.S. - quase todos os episódios possuem cenas hilárias pós-créditos.</p>
+          <p class="review-credits">Crítica por Yuri Correa, extraída do site Papo de Cinema</p>
         </div>
-      </section>
-    </main>
+        
+        <p class="video-title">Assita ao trailer:</p>
+        <div class="video">
+          <iframe width="100%" height="400" src="https://www.youtube.com/embed/BFTSrbB2wII" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    
+        <p class="netflix-title">Curtiu? Clique no link abaixo e assista agora todas as temporadas na Netflix!</p>
+        <a href="https://www.netflix.com/br/title/80014749"><img class="netflix-link" src="img\netflix.png"></a>
+     
+      </main>
+    </div>
+  
+    <footer class="footer">
+      <p>Projeto desenvolvido durante o <a href="https://www.laboratoria.la/br">Bootcamp da Laboratória</a></p>
+      <p>Ana Clara (<a href="https://github.com/anaclara-gf">Github</a> | <a href="https://www.linkedin.com/in/anaclaragf/">LinkedIn</a>) e Luciana Pereira (<a href="https://github.com/Lu-Pereira">Github</a> | <a href="https://www.linkedin.com/in/lu-pereira/">LinkedIn</a>)</p>
+    </footer>
   </div>
-
-
-  <footer class="footer">
-    <p>Projeto desenvolvido durante o <a href="https://www.laboratoria.la/br">Bootcamp da Laboratória</a></p>
-    <p>Ana Clara (<a href="https://github.com/anaclara-gf">Github</a> | <a href="https://www.linkedin.com/in/anaclaragf/">LinkedIn</a>) e Luciana Pereira (<a href="https://github.com/Lu-Pereira">Github</a> | <a href="https://www.linkedin.com/in/lu-pereira/">LinkedIn</a>)</p>
-  </footer>
   
   <script src="main.js" type="module"></script>
 

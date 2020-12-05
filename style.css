@@ -1,11 +1,15 @@
 body {
-    width: 1000px;
-    margin: 0 auto;
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     font-family: -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
 } 
+
+#root {
+    width: 1000px;
+    margin: 0 auto;
+}
 
 .header-container {
     display: flex;
@@ -47,12 +51,17 @@ body {
 }
 
 .menu-items {
-    margin: 0 0 0 20px;
-    font-size: 18px;
+    margin: 0 0 0 15px;
+    font-size: 16px;
 }
 
-#home, #characters, #more {
+#home, #characters, #more-about-button {
     cursor: pointer;
+    text-transform: uppercase;
+}
+
+#home:hover, #characters:hover, #more-about-button:hover {
+    color: #17AEBF;
 }
 
 .menu-items:first-child {
@@ -65,7 +74,6 @@ body {
 
 .synopsis {
     display: flex;
-    align-items: center;
 }
 
 .synopsis-image {
@@ -82,6 +90,8 @@ body {
     flex-direction: column;
     margin-left: 20px;
     text-align: justify;
+    justify-content: flex-end;
+    height: 281px;
 }
 
 .synopsis-text h1 {
@@ -92,102 +102,120 @@ body {
 
 .synopsis-text p {
     font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 0;
 }
 
 #main-characters-title {
     text-align: center;
     font-size: 28px;
-    /* margin: 30px 0 0 0; */
+    margin: 50px 0 30px 0;
 }
 
 .image {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }
+
 
 .characters-list {
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
-    justify-content: center;
 }
-
-.characters-list .item {
-    background-color: #17AEBF;
-    padding: 5%;
-    width: 70%;
-    margin: 5%;
-    text-align: center;
-    box-shadow: 4px 4px 20px rgba(43, 118, 197, 0.919);
-}
-
-/* .characters-list.item:hover {
-    box-shadow: none;
-} */
 
 .characters-list-page-characters {
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
-    justify-content: space-between;
 }
 
 .characters-list-page-characters .item {
     background-color: #17AEBF;
     padding: 5%;
-     margin: 40px;
     text-align: center;
-    box-shadow: 5px 5px 15px rgba(0,0,0,.4);
     transition: 0.3s all;
 }
 
-.characters-list-page-characters .item:hover {
-    box-shadow: none;
-    transform: scale(0.99) ;
+#main-characters-list .flip-container {
+    perspective: 1000px;
+    width: 17.6%;
+    height: 330px;
+    margin: 0 1.5%;
+}
+
+#main-characters-list .flip-container:last-child {
+    margin-right: 0;
+}
+
+#main-characters-list .flip-container:first-child {
+    margin-left: 0;
 }
 
 /* Flipper */
-.flipper {
-  transition: 0.6s;
-  transform-style: preserve-3d;
-  position: relative;
+.flip-container {
+    perspective: 1000px;
+    width: 30%;
+    height: 330px;
+    margin: 0 2.5% 40px 2.5%;
 }
 
+.flip-container:nth-child(3n) {
+    margin-right: 0;
+}
 
+.flip-container:nth-child(3n+1) {
+    margin-left: 0;
+}
+
+.flipper {
+    display: flex;
+    position: relative;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+} 
+
+.flip-container:hover .flipper {
+    transform: rotateY(180deg);
+}
 
 .front, .back {
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #17AEBF;
+    text-align: center;
+    box-shadow: 4px 4px 20px rgba(43, 118, 197, 0.919);
 }
-
-/* frente posicionada sobre o verso */
-.front {
-  z-index: 2;
- }
 
 /* verso inicialmente escondido */
-.back{
-  transform: rotateY(180deg);
+.back {
+    transform: rotateY(180deg);
 }
 
-.flip-container {
-  perspective: 1000;
+.front p {
+    margin: 5px 0;
 }
 
-
-.flip-container:hover .flipper{
-  transform: rotateY(180deg);
-}
-
-.flip-container, .front, .back {
-  width: 320px;
-  height: 360px;
-  margin-bottom: 40px;
-}
+.back p {
+    align-self: center;
+    text-align: center;
+    width: 85%;
+    margin: 10px auto;
+} 
 
 /* Filtro */
 
@@ -201,9 +229,18 @@ body {
     width: 100%;
 }
 
+#filter-options-clear {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
 .user-choices {
     display: flex;
     justify-content: space-between;
+}
+
+#sort-by {
+    width: 150px;
 }
 
 .index-of-page {
@@ -214,14 +251,88 @@ body {
 .pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.pagination button, .pagination .numbers  {
+    height: 30px;
+    margin: 0 2px;
+}
+
+.show-percentage {
+    display: flex;
+    justify-content: center;
+}
+
+#show-percentage {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 10px;
+    border: 1px solid #17AEBF;
+}
+
+.no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.more-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+}
+
+.review-title {
+    font-size: 28px;
+    font-weight: bold;
+    align-self: flex-start;
+    margin: 0 0 25px 0;
+}
+
+.review-image {
+    width: 800px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center 15%;
+    margin-bottom: 30px;
+}
+
+.review-text {
+    text-align: justify;
+    margin: 0 0 15px 0;
+}
+
+.review-credits {
+    width: 800px;
+    text-align: right;
+    font-style: oblique;
+}
+
+.video {
+    width: 700px;
+}
+
+.netflix-title, .video-title {
+    margin-top: 40px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.netflix-link {
+    width: 225px;
+    margin-bottom: 50px;
 }
 
 .page-disabled {
     display: none;
-}
-
-.page-active {
-    flex: 1;
 }
 
 .footer {
@@ -229,7 +340,24 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: auto;
+}
+
+.footer p {
+    margin: 0;
+    text-align: center;
+}
+
+.footer a {
     text-decoration: none;
+    color: grey;
+}
+
+.footer p:first-child {
+    margin-top: 30px;
+}
+
+.footer p:last-child {
+    margin-bottom: 20px;
 }
 
 
@@ -307,20 +435,115 @@ body {
         width: 100%;
     }
 
+    .synopsis-text {
+        height: auto;
+        margin:0;
+    }
+
     .synopsis-text h1 {
         align-self: center;
     }
 
     .synopsis-text p {
-        margin-right: 20px;
+        margin: 10px 20px;
     }
 
     .user-choices, .index-of-page {
         margin: 10px;
     }
 
-    .characters-list .item, .characters-list-page-characters .item {
+    .flip-container {
+        margin: 5% 10%;
         width: 80%;
-        margin: 2% auto;
+    }
+
+    .flip-container:nth-child(3n) {
+        margin-right: 10%;
+    }
+    
+    .flip-container:nth-child(3n+1) {
+        margin-left: 10%;
+    }
+
+    #main-characters-list .flip-container {
+        margin: 5% 10%;
+        width: 80%;
+    }
+    
+    #main-characters-list .flip-container:last-child {
+        margin-right: 10%;
+    }
+    
+    #main-characters-list .flip-container:first-child {
+        margin-left: 10%;
+    }
+
+    .review {
+        width: 100%;
+    }
+
+    .review-image {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 0;
+    }
+
+    .review-title, .review-text {
+        margin: 15px;
+    }
+
+    .review-credits {
+        width: 100%;
+        text-align: center;
+    }
+
+    .video {
+        width: 100%;
+    }
+
+    .netflix-title {
+        text-align: center;
+        margin: 40px 15px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 999px) {
+    .header-container {
+        width: 95%;
+        margin: 10px auto 30px auto;
+    }
+
+    .menu-container li p {
+        font-size: 16px;
+    }
+
+    .synopsis {
+        flex-direction: column;
+        width: 700px;
+        margin: 0 auto;
+        align-items: center;
+    }
+
+    .synopsis-image {
+        width: 700px;
+        margin: 0 auto;
+    }
+
+    .giphy {
+        width: 100%;
+    }
+
+    .synopsis-text {
+        height: auto;
+        margin: 20px 0;
+    }
+
+    .synopsis-text h1 {
+        align-self: center;
+    }
+
+    #main-characters-list {
+        width: 90%;
+        margin: 0 auto;
     }
 }

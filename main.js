@@ -1,10 +1,11 @@
 import {
   sortData,
+  sortDataArrayLength,
   search,
-  filter
+  filter,
+  computeStats,
 } from "./data.js";
 import data from "./data/rickandmorty/rickandmorty.js";
-import dataEpisodes from "./data/rickandmorty/rickandmorty-episodes.js";
 
 const html = {
     menuHomeButton: document.getElementById("home"),
@@ -35,6 +36,11 @@ const html = {
     paginateIndex: document.querySelector(".paginate"),
     paginationButtonControls: document.querySelector(".pagination"),
     userChoices: document.querySelector(".user-choices"),
+    menuMoreAboutButton: document.getElementById("more-about-button"),
+    moreAboutPage: document.getElementById("more-about"),
+    showPercentage: document.getElementById("show-percentage"),
+    backToCharactersPage: document.getElementById("back-characters-page"),
+    clearFilterOptions: document.getElementById("filter-options-clear"),
 };
 
 const loadHomePage = () => {
@@ -44,10 +50,24 @@ const loadHomePage = () => {
   searchDefinitions.searchFilter = "";
   html.filterOptions.classList.remove("show");
   html.home.classList.remove("page-disabled");
-  html.home.classList.add("page-active");
-  html.charactersPage.classList.remove("page-active");
   html.charactersPage.classList.add("page-disabled");
+  html.menuHamburguerItems.classList.remove("show");
+  html.paragraphNoResults.classList.add("page-disabled");
+  html.moreAboutPage.classList.add("page-disabled");
+};
+
+const loadCharactersPage = () => {
+  pageDefinitions.page = 1;
+  html.searchText.value = "";
+  searchDefinitions.searchText = html.searchText.value;
+  searchDefinitions.searchOrder = "empty";
+  html.home.classList.add("page-disabled");
+  html.charactersPage.classList.remove("page-disabled");
+  update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
+  buttonsControls.createListeners();
   html.menuHamburguerItems.classList.toggle("show");
+  html.moreAboutPage.classList.add("page-disabled");
+  html.showPercentage.classList.add("page-disabled");
 };
 
 const uncheckFilters = (checked = false) => {
@@ -76,24 +96,29 @@ function changePage(){
         html.filterOptions.classList.toggle("show");
     });
     
-    html.menuCharactersPageButton.addEventListener("click", () => {
-        pageDefinitions.page = 1;
-        html.searchText.value = "";
-        searchDefinitions.searchText = html.searchText.value;
-        searchDefinitions.searchOrder = "empty";
-        html.home.classList.remove("page-active");
-        html.home.classList.add("page-disabled");
-        html.charactersPage.classList.remove("page-disabled");
-        html.charactersPage.classList.add("page-active");
-        update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
-        buttonsControls.createListeners();
-        html.menuHamburguerItems.classList.toggle("show");
+    html.menuMoreAboutButton.addEventListener("click", () => {
+      html.home.classList.add("page-disabled");
+      html.charactersPage.classList.add("page-disabled");
+      html.moreAboutPage.classList.remove("page-disabled");
+      html.menuHamburguerItems.classList.remove("show");
     });
+
+    html.menuCharactersPageButton.addEventListener("click", loadCharactersPage);
+
+    html.backToCharactersPage.addEventListener("click", loadCharactersPage);
 
     html.filterValuesButton.addEventListener("click", (event) => {
         event.preventDefault();
         pageDefinitions.page = 1;
         searchDefinitions.searchOrder = "empty";
+        searchDefinitions.searchOrder = "empty";
+        html.chooseSortOrder.value = "empty";
+        html.showPercentage.innerHTML = "";
+        html.showPercentage.classList.remove("page-disabled");
+        html.filterOptions.classList.remove("show");
+        html.charactersPage.classList.add("page-disabled");
+        html.paginationButtonControls.classList.add("page-disabled")
+        html.paragraphNoResults.classList.add("page-disabled");
         searchDefinitions.searchFilter = checkedFilters(html.filterCheckbox);
         update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
         buttonsControls.createListeners();
@@ -106,27 +131,33 @@ function changePage(){
         if(html.searchText.value === ""){
             alert("Digite um nome para sua pesquisa!")
         }else{
-            if(html.home.classList.contains("page-active")){
-                html.home.classList.remove('page-active');
+            if(!html.home.classList.contains("page-disabled")){
                 html.home.classList.add('page-disabled');
-                html.charactersPage.classList.remove('page-disabled');
-                html.charactersPage.classList.add('page-active');
             }
+            html.charactersPage.classList.add("page-disabled");
+            html.paginationButtonControls.classList.add("page-disabled")
+            html.paragraphNoResults.classList.add("page-disabled");
+            html.moreAboutPage.classList.add("page-disabled");
             pageDefinitions.page = 1;
             searchDefinitions.searchOrder = "empty";
+            html.chooseSortOrder.value = "empty";
             html.numberOfPages.innerHTML = "";
+            html.showPercentage.innerHTML = "";
+            html.showPercentage.classList.remove("page-disabled");
             searchDefinitions.searchText = html.searchText.value;
             uncheckFilters();
             searchDefinitions.searchFilter = "";
             html.filterOptions.classList.remove("show"); 
             update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter);
-            // html.paragraphNoResults.innerHTML = "Sua pesquisa não obteve resultados!";
-            buttonsControls.createListeners();
             html.numberOfPages.innerHTML = "";
-            createItemsIndex();           
+            createItemsIndex(); 
+
+            if(pageDefinitions.totalPage > 1){
+              html.paginationButtonControls.classList.remove("page-disabled")
+              buttonsControls.createListeners();
+            }          
         }
     });
-
     
     html.chooseSortOrder.addEventListener("change", (event) => {
         pageDefinitions.page = 1;
@@ -135,13 +166,18 @@ function changePage(){
         update.charactersPage(searchDefinitions.searchText, searchDefinitions.searchFilter, searchDefinitions.searchOrder);
         buttonsControls.createListeners();
         html.numberOfPages.innerHTML = "";
+        html.showPercentage.classList.add("page-disabled");
         createItemsIndex();
     });
 
     html.menuHomeButton.addEventListener("click", loadHomePage);
 
     html.homeByLogoImage.addEventListener("click", loadHomePage);
-};
+
+    html.clearFilterOptions.addEventListener("click", () => {
+      uncheckFilters();
+    });
+}
 
 const pageDefinitions = {
     page: 1,
@@ -159,45 +195,44 @@ const searchDefinitions = {
 function firstPagePrintCard(card) {
     let firstPageCards = html.homePageCharactersList;
     firstPageCards.innerHTML = printCard(card);
-};
+}
 
 function charactersPagePrintCard(card) {
     let charactersCards = html.charactersList;
     charactersCards.innerHTML = printCard(card);
-};
+}
 
 function printCard(card) {
   let cards = "";
-  const totalEpisodes = parseInt(dataEpisodes.info.count);
+  const totalEpisodes = 31;
   for (let eachCard of card) {
     cards += `
-<div class="flip-container">
-  <div class="flipper">
-    <div class="front">
-        <li class="item">
-            <img class="image" src=${eachCard.image}>
-            <p class="name"><b>${eachCard.name}</b></p>
-        </li>
-        </div>
+    <div class="flip-container">
+      <div class="flipper">
+        <div class="front">
+            <li class="item">
+                <img class="image" src=${eachCard.image}>
+                <p class="name"><b>${eachCard.name}</b></p>
+                <p class="species"><b>${eachCard.species}</b></p>
+                <p class="status"><b>Status:</b> ${eachCard.status}</p>
+                <p class="gender"><b>Gênero:</b> ${eachCard.gender}</p>
+            </li>
+            </div>
 
-        <div class="back flip-container">
-        <li class="item">
-        <p class="species"><b>${eachCard.species}</b></p>
-        <p class="status"><b>Status:</b> ${eachCard.status}</p>
-        <p class=${eachCard.type === "" ? "page-disabled" : "type"}><b>Type:</b> ${eachCard.type}</p>
-        <p class="gender"><b>Gênero:</b>${eachCard.gender}</p>
-        <p class="origin"><b>Origem:</b> ${eachCard.origin.name}</p>
-        <p class="location"><b>Última localização:</b> ${eachCard.location.name}</p>
-        <p class="episode"><b>Número de episódios em que aparece:</b> ${eachCard.episode.length}</p>
-        <p class="percentage-episodes"><b>Porcentagem de episódios em que aparece:</b> ${Math.round(100*(eachCard.episode.length)/totalEpisodes)}%</p>
-        </li>
-        </div>
-      </div>
-    </div>
-        `
+            <div class="back">
+            <li class="item">
+            <p class=${eachCard.type === "" ? "page-disabled" : "type"}><b>Type:</b> ${eachCard.type}</p>
+            <p class="origin"><b>Origem:</b> ${eachCard.origin.name}</p>
+            <p class="location"><b>Última localização:</b> ${eachCard.location.name}</p>
+            <p class="episode"><b>Número de episódios em que aparece:</b> ${eachCard.episode.length}</p>
+            <p class="percentage-episodes"><b>Porcentagem de episódios em que aparece:</b> ${computeStats(totalEpisodes, eachCard.episode.length)}%</p>
+            </li>
+            </div>
+          </div>
+      </div>`
     }
     return cards;
-};
+}
     // let firstEpisodeAppeared;
 
     // <p class="first-episode-name">Primeiro (ou único) episódio que aparece: ${firstEpisode.name}</p>
@@ -248,12 +283,14 @@ const buttonsNumbers = {
   update() {
     const {
       maxLeft,
-      maxRight
+      maxRight,
     } = buttonsNumbers.calculateMaxVisible();
     html.paginateNumbers.innerHTML = "";
 
-    for (let actualPage = maxLeft; actualPage <= maxRight; actualPage++) {
-      buttonsNumbers.create(actualPage);
+    if(maxRight!==1){
+      for (let actualPage = maxLeft; actualPage <= maxRight; actualPage++) {
+        buttonsNumbers.create(actualPage);
+      }
     }
   },
   create(number) {
@@ -319,21 +356,19 @@ function createItemsIndex() {
     numberOfPages.innerHTML = "Página " + pageDefinitions.page + " de " + pageDefinitions.totalPage;
   }
 
-    const textItems = html.textItemsIndex;
-    const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
-    const finalItem = initialItem+pageDefinitions.perPage;
-    if(pageDefinitions.totalItems > 1 && pageDefinitions.totalItems < 9){
-        textItems.innerHTML = 1 + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
-    }else if(pageDefinitions.totalItems >= 9){
-        if(pageDefinitions.page === 1){
-            textItems.innerHTML = 1 + "-" + pageDefinitions.perPage + " de " + pageDefinitions.totalItems + " personagens";
-        }else if(pageDefinitions.page === pageDefinitions.totalPage){
-            textItems.innerHTML = initialItem + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
-        }else {
-            textItems.innerHTML = initialItem + "-" + finalItem + " de " + pageDefinitions.totalItems + " personagens";
-        }
-    }
-};
+  const textItems = html.textItemsIndex;
+  const initialItem = (pageDefinitions.perPage*(pageDefinitions.page-1))+1;
+  const finalItem = initialItem+(pageDefinitions.perPage-1);
+  if(pageDefinitions.totalItems >= 1 && pageDefinitions.totalItems < pageDefinitions.perPage){
+      textItems.innerHTML = 1 + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
+  }else if(pageDefinitions.totalItems >= pageDefinitions.perPage){
+      if(pageDefinitions.page === pageDefinitions.totalPage){
+          textItems.innerHTML = initialItem + "-" + pageDefinitions.totalItems + " de " + pageDefinitions.totalItems + " personagens";
+      }else{
+          textItems.innerHTML = initialItem + "-" + finalItem + " de " + pageDefinitions.totalItems + " personagens";
+      }
+  }
+}
 
 const update = {
     firstPage() {
@@ -341,19 +376,25 @@ const update = {
         firstPagePrintCard(firstPageItems)
     },
     paginateResults(data) {
-        html.charactersList.innerHTML = ""; 
-        let paging = pageDefinitions.page - 1;
-        let start = paging * pageDefinitions.perPage;
-        let end = start + pageDefinitions.perPage;
-        const dataSlice = data.slice(start, end)
+        if(data.length){
+          html.charactersList.innerHTML = ""; 
+          let paging = pageDefinitions.page - 1;
+          let start = paging * pageDefinitions.perPage;
+          let end = start + pageDefinitions.perPage;
+          const dataSlice = data.slice(start, end)
+          
+          pageDefinitions.totalItems = data.length;
+          pageDefinitions.totalPage = Math.ceil(pageDefinitions.totalItems/pageDefinitions.perPage)
+  
+          charactersPagePrintCard(dataSlice);
+          window.scrollTo(0,0);
+          buttonsNumbers.update();
+          createItemsIndex();
+          html.charactersPage.classList.remove("page-disabled");
+        }else{
+          html.paragraphNoResults.classList.remove("page-disabled");
+        }
         
-        pageDefinitions.totalItems = data.length;
-        pageDefinitions.totalPage = Math.ceil(pageDefinitions.totalItems/pageDefinitions.perPage)
-
-        charactersPagePrintCard(dataSlice);
-        window.scrollTo(0,0);
-        buttonsNumbers.update();
-        createItemsIndex();
     },
     charactersPage(searchText, searchFilter, sortOrder = "empty") {
         let dataForPaginate = data.results.slice();
@@ -394,14 +435,29 @@ const update = {
     }
 
     if (sortOrder !== "empty") {
-      dataForPaginate = sortData(dataForPaginate, "name", sortOrder);
+      if(sortOrder === "ascLetter" || sortOrder === "descLetter"){
+        dataForPaginate = sortData(dataForPaginate, "name", sortOrder);
+      }else{
+        dataForPaginate = sortDataArrayLength(dataForPaginate, "episode", sortOrder)
+      }
     } else {
-      dataForPaginate = sortData(dataForPaginate, "id", "asc");
+      dataForPaginate = sortData(dataForPaginate, "id", "ascLetter");
     }
 
     update.paginateResults(dataForPaginate);
+    if(searchFilter){
+      update.createStatistics(dataForPaginate, searchFilter);
+    }else if(searchText){
+      update.createStatistics(dataForPaginate, searchText);
+    }
   },
+  createStatistics(filterData, filterDataName){
+    const percentage = computeStats(data.results.length, filterData.length);
+    html.showPercentage.innerHTML = `Sua pesquisa "${typeof filterDataName === Object ? filterDataName.join(", ") : filterDataName}" retornou ${percentage}% dos personagens`;
+  }
 }
+
+
 
 function init() {
   update.firstPage();
